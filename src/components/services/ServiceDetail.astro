@@ -48,6 +48,7 @@ const accentColors: Record<string, string> = {
   <div class="svc-detail__visual" data-aos={reverse ? 'fade-left' : 'fade-right'} style={`--accent: ${accentColors[id]}`}>
     <div class="svc-detail__icon" set:html={icons[id]} />
     <span class="svc-detail__en">{titleEn}</span>
+    <span class="svc-detail__photo-notice">추후 사진 삽입 예정</span>
   </div>
 
   <div class="svc-detail__content" data-aos={reverse ? 'fade-right' : 'fade-left'} data-aos-delay="100">
@@ -124,6 +125,17 @@ const accentColors: Record<string, string> = {
     color: var(--accent);
     position: relative;
     z-index: 1;
+  }
+
+  .svc-detail__photo-notice {
+    position: relative;
+    z-index: 1;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.3);
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+    letter-spacing: 0.04em;
   }
 
   /* Content panel */
