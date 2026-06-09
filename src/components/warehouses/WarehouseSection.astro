@@ -1,0 +1,313 @@
+---
+interface Props {
+  warehouse: {
+    id: string;
+    name: string;
+    region: string;
+    address: string;
+    area: number | null;
+    capacity: number | null;
+    tempRange: string | null;
+    images: string[];
+    features: string[];
+  };
+  reverse?: boolean;
+}
+
+const { warehouse: w, reverse = false } = Astro.props;
+
+const specs = [
+  { label: '면적', value: w.area ? `${w.area.toLocaleString()} m²` : null },
+  { label: '보관용량', value: w.capacity ? `${w.capacity.toLocaleString()} 파렛트` : null },
+  { label: '온도대', value: w.tempRange ?? null },
+];
+---
+
+<article class={`wh-section ${reverse ? 'wh-section--reverse' : ''}`} id={w.id}>
+  <!-- 사진 -->
+  <div class="wh-section__photo" data-aos={reverse ? 'fade-left' : 'fade-right'}>
+    <div class="wh-section__img-wrap">
+      <img
+        src={w.images[0]}
+        alt={`${w.name} 전경`}
+        loading="lazy"
+        onerror="this.closest('.wh-section__img-wrap').classList.add('wh-section__img-wrap--empty')"
+      />
+      <div class="wh-section__placeholder" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <rect x="4" y="10" width="40" height="28" rx="3"/>
+          <path d="M4 32l10-10 8 8 6-6 10 8"/>
+          <circle cx="16" cy="20" r="3"/>
+        </svg>
+        <span>추후 사진 삽입 예정</span>
+      </div>
+    </div>
+    <!-- 썸네일 미니 갤러리 (사진 2~3장) -->
+    {w.images.length > 1 && (
+      <div class="wh-section__thumbs">
+        {w.images.slice(1).map((src, i) => (
+          <div class="wh-section__thumb-wrap">
+            <img
+              src={src}
+              alt={`${w.name} 내부 ${i + 2}`}
+              loading="lazy"
+              onerror="this.closest('.wh-section__thumb-wrap').classList.add('wh-section__thumb-wrap--empty')"
+            />
+            <div class="wh-section__thumb-placeholder" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                <path d="M2 16l5-5 4 4 3-3 5 4"/>
+              </svg>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <!-- 정보 -->
+  <div class="wh-section__info" data-aos="fade-up" data-aos-delay="100">
+    {w.region && <span class="wh-section__region">{w.region}</span>}
+    <h2 class="wh-section__name">{w.name}</h2>
+    <p class="wh-section__address">
+      <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14" aria-hidden="true">
+        <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" clip-rule="evenodd"/>
+      </svg>
+      {w.address}
+    </p>
+
+    <!-- 제원 -->
+    <div class="wh-section__specs">
+      {specs.map(s => (
+        <div class="wh-section__spec">
+          <span class="wh-section__spec-label">{s.label}</span>
+          <span class="wh-section__spec-value">
+            {s.value ?? <em class="wh-tbd">추후 입력 예정</em>}
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <!-- 시설 특징 -->
+    <ul class="wh-section__features">
+      {w.features.map((f, i) => (
+        <li data-aos="fade-up" data-aos-delay={120 + i * 60}>{f}</li>
+      ))}
+    </ul>
+  </div>
+</article>
+
+<style>
+  .wh-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .wh-section--reverse {
+    direction: rtl;
+  }
+  .wh-section--reverse > * { direction: ltr; }
+
+  /* 사진 영역 */
+  .wh-section__img-wrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .wh-section__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.5s ease;
+  }
+
+  .wh-section:hover .wh-section__img-wrap img { transform: scale(1.03); }
+
+  .wh-section__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    border: 2px dashed var(--color-border);
+    border-radius: inherit;
+  }
+
+  .wh-section__placeholder svg { width: 44px; height: 44px; opacity: 0.4; }
+  .wh-section__placeholder span { font-size: 0.78rem; opacity: 0.6; letter-spacing: 0.03em; }
+  .wh-section__img-wrap:not(.wh-section__img-wrap--empty) .wh-section__placeholder { display: none; }
+  .wh-section__img-wrap--empty img { display: none; }
+
+  /* 썸네일 행 */
+  .wh-section__thumbs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    margin-top: 0.6rem;
+  }
+
+  .wh-section__thumb-wrap {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+  }
+
+  .wh-section__thumb-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    position: relative; z-index: 1;
+    transition: transform 0.4s ease;
+  }
+
+  .wh-section__thumb-wrap:hover img { transform: scale(1.06); }
+
+  .wh-section__thumb-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    opacity: 0.4;
+  }
+
+  .wh-section__thumb-placeholder svg { width: 24px; height: 24px; }
+  .wh-section__thumb-wrap:not(.wh-section__thumb-wrap--empty) .wh-section__thumb-placeholder { display: none; }
+  .wh-section__thumb-wrap--empty img { display: none; }
+
+  /* 정보 영역 */
+  .wh-section__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .wh-section__region {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    background: rgba(14, 165, 233, 0.08);
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    border-radius: 100px;
+    padding: 0.25rem 0.8rem;
+    align-self: flex-start;
+  }
+
+  .wh-section__name {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 900;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .wh-section__address {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .wh-section__address svg { flex-shrink: 0; color: var(--color-primary); }
+
+  /* 제원 그리드 */
+  .wh-section__specs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1rem;
+  }
+
+  .wh-section__spec {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: center;
+  }
+
+  .wh-section__spec-label {
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .wh-section__spec-value {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+
+  .wh-tbd {
+    font-style: normal;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    opacity: 0.6;
+  }
+
+  /* 특징 리스트 */
+  .wh-section__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .wh-section__features li {
+    font-size: 0.88rem;
+    color: var(--color-text);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .wh-section__features li::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 900px) {
+    .wh-section,
+    .wh-section--reverse {
+      grid-template-columns: 1fr;
+      direction: ltr;
+      gap: 2rem;
+    }
+    .wh-section__specs { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .wh-section__specs { grid-template-columns: 1fr 1fr; }
+    .wh-section__thumbs { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

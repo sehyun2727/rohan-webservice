@@ -1,7 +1,7 @@
 export const warehouses = [
   {
     id:       'anseong',
-    name:     '안성센터',
+    name:     '로한물류 안성 거점센터',
     region:   '수도권 거점',
     address:  '경기 안성시 원곡면 원당로 233',
     area:     null,       // 추후 입력 (단위: m²)
@@ -21,8 +21,8 @@ export const warehouses = [
   },
   {
     id:       'jinju',
-    name:     '진주센터',
-    region:   '영남 거점',
+    name:     '로한물류 진주센터',
+    region:   null,
     address:  '경남 진주시 진성면 동부로 1233',
     area:     null,
     capacity: null,

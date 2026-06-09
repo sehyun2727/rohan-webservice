@@ -1,12 +1,139 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WarehouseSection from '../components/warehouses/WarehouseSection.astro';
+import { warehouses } from '../data/warehouses.js';
 ---
-<BaseLayout title="창고소개">
-  <section class="page-stub">
-    <div class="container">
-      <span class="page-stub__label">Warehouses</span>
-      <h1>창고소개</h1>
-      <p>Phase 6에서 구현 예정 — 안성센터, 진주센터 (면적·보관용량·온도대·시설 정보 플레이스홀더)</p>
+
+<BaseLayout
+  title="창고소개"
+  description="(주)로한물류 창고소개 — 안성(수도권)·진주(영남) 냉동·냉장 창고, 24시간 온도 모니터링"
+>
+  <!-- 페이지 히어로 -->
+  <div class="page-hero">
+    <div class="container page-hero__inner">
+      <p class="page-hero__label en">Our Warehouses</p>
+      <h1 class="page-hero__title">창고소개</h1>
+      <p class="page-hero__sub">
+        수도권 안성, 영남 진주 두 거점에서<br />
+        냉동·냉장 전 온도대 보관 서비스를 제공합니다.
+      </p>
+      <div class="page-hero__nav">
+        <a href="#anseong">안성 거점센터</a>
+        <span aria-hidden="true">·</span>
+        <a href="#jinju">진주센터</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 창고 상세 -->
+  <section class="wh-list" aria-label="창고 상세 정보">
+    <div class="container wh-list__inner">
+      {warehouses.map((w, i) => (
+        <WarehouseSection warehouse={w} reverse={i % 2 === 1} />
+      ))}
     </div>
   </section>
+
 </BaseLayout>
+
+<style>
+  /* ── 히어로 ── */
+  .page-hero {
+    background:
+      radial-gradient(ellipse 55% 70% at 85% 50%, rgba(14, 80, 165, 0.22) 0%, transparent 65%),
+      linear-gradient(160deg, rgba(4,12,34,0.98) 0%, rgba(10,32,72,0.96) 100%);
+    padding-block: 5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 72px 72px;
+    pointer-events: none;
+  }
+
+  .page-hero__inner { position: relative; z-index: 1; }
+
+  .page-hero__label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+  }
+
+  .page-hero__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .page-hero__nav a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  .page-hero__nav a:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+
+  .page-hero__nav span { color: rgba(255,255,255,0.25); }
+
+  /* ── 창고 목록 ── */
+  .wh-list {
+    background: #fff;
+    padding-block: var(--section-py);
+  }
+
+  .wh-list__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  /* 창고 사이 구분선 */
+  .wh-list__inner > :not(:first-child) {
+    padding-top: 5rem;
+    border-top: 1px solid var(--color-border);
+    margin-top: -5rem;
+    padding-top: 5rem;
+  }
+
+  @media (max-width: 900px) {
+    .wh-list__inner { gap: 3.5rem; }
+    .wh-list__inner > :not(:first-child) {
+      padding-top: 3.5rem;
+      margin-top: -3.5rem;
+      padding-top: 3.5rem;
+    }
+  }
+</style>
