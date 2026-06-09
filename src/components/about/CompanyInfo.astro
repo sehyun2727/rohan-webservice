@@ -1,0 +1,94 @@
+---
+import { company } from '../../data/company.js';
+
+const rows = [
+  { label: '상호',       value: company.name },
+  { label: '대표이사',   value: company.ceo },
+  { label: '설립',       value: `${company.founded}년` },
+  { label: '임직원',     value: `약 ${company.employees}명` },
+  { label: '본사 주소',  value: company.address },
+  { label: '대표 전화',  value: company.tel },
+  { label: '사업자번호', value: company.businessNumber },
+  { label: '주요 사업',  value: '냉동·냉장 운송 / 3PL 물류대행 / 냉동창고 임대' },
+];
+---
+
+<section class="company-info" aria-label="기업개요">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">Company Overview</span>
+      <h2 class="section-title">기업개요</h2>
+    </div>
+
+    <table class="company-info__table">
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <th scope="row">{r.label}</th>
+            <td>{r.value}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  .company-info {
+    padding-block: var(--section-py);
+    background: var(--color-bg-subtle);
+  }
+
+  .company-info__table {
+    width: 100%;
+    max-width: 720px;
+    margin-top: 3rem;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+  }
+
+  .company-info__table tr {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .company-info__table tr:first-child {
+    border-top: 2px solid var(--color-primary);
+  }
+
+  .company-info__table th {
+    width: 160px;
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-weight: 700;
+    color: var(--color-text);
+    background: #fff;
+    vertical-align: top;
+    white-space: nowrap;
+  }
+
+  .company-info__table td {
+    padding: 1rem 1.25rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 480px) {
+    .company-info__table,
+    .company-info__table tbody,
+    .company-info__table tr,
+    .company-info__table th,
+    .company-info__table td {
+      display: block;
+      width: 100%;
+    }
+
+    .company-info__table th {
+      padding-bottom: 0.25rem;
+      background: transparent;
+    }
+
+    .company-info__table td {
+      padding-top: 0;
+    }
+  }
+</style>

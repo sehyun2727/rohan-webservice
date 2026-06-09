@@ -1,0 +1,128 @@
+---
+import { company } from '../../data/company.js';
+---
+
+<section class="greeting" aria-label="대표이사 인사말">
+  <div class="container greeting__inner">
+
+    <div class="greeting__text" data-aos="fade-right">
+      <span class="section-label">CEO Message</span>
+      <h2 class="section-title">대표이사 인사말</h2>
+      <div class="greeting__body">
+        <p>
+          <!-- 인사말 본문을 여기에 입력하세요 -->
+          안녕하십니까, (주)로한물류 대표이사 {company.ceo}입니다.
+        </p>
+        <p>
+          <!-- 두 번째 단락 -->
+          [대표이사 인사말 내용을 입력해 주세요.]
+        </p>
+        <p>
+          <!-- 세 번째 단락 -->
+          [추가 내용을 입력해 주세요.]
+        </p>
+      </div>
+      <p class="greeting__sign">
+        (주)로한물류 대표이사 <strong>{company.ceo}</strong>
+      </p>
+    </div>
+
+    <div class="greeting__photo" aria-hidden="true" data-aos="fade-left" data-aos-delay="100">
+      <!-- 대표이사 사진을 public/assets/ceo.jpg 에 넣어주세요 -->
+      <div class="greeting__photo-placeholder">
+        <span class="greeting__photo-initial">{company.ceo.charAt(0)}</span>
+        <p>대표이사 사진</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .greeting {
+    padding-block: var(--section-py);
+    background: #fff;
+  }
+
+  .greeting__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .greeting__body {
+    margin-block: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .greeting__body p {
+    font-size: 0.975rem;
+    line-height: 2;
+    color: var(--color-text);
+  }
+
+  .greeting__sign {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.25rem;
+  }
+
+  .greeting__sign strong {
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  .greeting__photo {
+    width: 260px;
+    flex-shrink: 0;
+  }
+
+  .greeting__photo-placeholder {
+    width: 260px;
+    height: 320px;
+    background: var(--color-bg-subtle);
+    border: 2px dashed var(--color-border);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+  }
+
+  .greeting__photo-initial {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .greeting__inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .greeting__photo {
+      width: 100%;
+      order: -1;
+    }
+
+    .greeting__photo-placeholder {
+      width: 100%;
+      height: 220px;
+    }
+  }
+</style>

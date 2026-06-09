@@ -1,0 +1,157 @@
+---
+// 연혁 데이터를 여기에 입력하세요 (최신순)
+const history = [
+  {
+    year: '2024',
+    events: [
+      '[연혁 항목을 입력해 주세요]',
+    ],
+  },
+  {
+    year: '2020',
+    events: [
+      '[연혁 항목을 입력해 주세요]',
+    ],
+  },
+  {
+    year: '2015',
+    events: [
+      '[연혁 항목을 입력해 주세요]',
+      '[연혁 항목을 입력해 주세요]',
+    ],
+  },
+  {
+    year: '2010',
+    events: [
+      '[연혁 항목을 입력해 주세요]',
+    ],
+  },
+  {
+    year: '2007',
+    events: [
+      '(주)로한물류 설립',
+    ],
+  },
+];
+---
+
+<section class="history" aria-label="연혁">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">History</span>
+      <h2 class="section-title">연혁</h2>
+    </div>
+
+    <ol class="history__timeline" reversed>
+      {history.map((h, i) => (
+        <li class="history__item" data-aos="fade-up" data-aos-delay={i * 60}>
+          <span class={`history__year ${h.year === '2007' ? 'history__year--highlight' : ''}`}>{h.year}</span>
+          <ul class="history__events">
+            {h.events.map((e) => (
+              <li class="history__event">{e}</li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .history {
+    padding-block: var(--section-py);
+    background: #fff;
+  }
+
+  .history__timeline {
+    margin-top: 3rem;
+    max-width: 680px;
+    position: relative;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  /* 세로 라인 */
+  .history__timeline::before {
+    content: '';
+    position: absolute;
+    left: 72px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--color-primary), var(--color-border));
+  }
+
+  .history__item {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding-bottom: 2.5rem;
+    position: relative;
+  }
+
+  .history__item:last-child { padding-bottom: 0; }
+
+  /* 연도 노드 원 */
+  .history__item::after {
+    content: '';
+    position: absolute;
+    left: 66px;
+    top: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--color-primary);
+  }
+
+  .history__year {
+    min-width: 52px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    padding-top: 1px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .history__year--highlight {
+    color: var(--color-point);
+    font-size: 1.15rem;
+  }
+
+  .history__events {
+    padding-left: 2.5rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .history__event {
+    font-size: 0.93rem;
+    color: var(--color-text);
+    line-height: 1.65;
+    position: relative;
+    padding-left: 0.9rem;
+  }
+
+  .history__event::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  @media (max-width: 480px) {
+    .history__timeline::before { left: 56px; }
+    .history__item::after { left: 50px; }
+    .history__year { min-width: 40px; font-size: 0.95rem; }
+    .history__events { padding-left: 1.75rem; }
+  }
+</style>

@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceDetail from '../components/services/ServiceDetail.astro';
+import ServicePoints from '../components/home/ServicePoints.astro';
+import RouteMap from '../components/services/RouteMap.astro';
+import QuoteCTA from '../components/home/QuoteCTA.astro';
+import { services } from '../data/services.js';
+---
+
+<BaseLayout
+  title="서비스"
+  description="(주)로한물류 서비스 — 콜드체인 운송, 3PL 물류대행, 냉동·냉장 창고임대. 전국 운송 노선."
+>
+  <!-- 페이지 헤더 -->
+  <div class="page-hero">
+    <div class="container page-hero__inner">
+      <p class="page-hero__label en">Our Services</p>
+      <h1 class="page-hero__title">서비스</h1>
+      <p class="page-hero__sub">
+        콜드체인 운송부터 3PL 대행, 창고 임대까지<br />
+        로한물류의 전 서비스를 한눈에 확인하세요.
+      </p>
+      <!-- 서비스 빠른 이동 -->
+      <div class="page-hero__nav">
+        <a href="#coldchain">콜드체인 운송</a>
+        <span aria-hidden="true">·</span>
+        <a href="#3pl">3PL 물류대행</a>
+        <span aria-hidden="true">·</span>
+        <a href="#storage">냉동창고 임대</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 서비스 상세 -->
+  <section class="svc-list section" aria-label="서비스 상세">
+    <div class="container svc-list__inner">
+      {services.map((s, i) => (
+        <ServiceDetail
+          id={s.id}
+          titleEn={s.titleEn}
+          title={s.title}
+          summary={s.summary}
+          description={s.description}
+          features={s.features}
+          reverse={i % 2 === 1}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- 물류 운영 프로세스 -->
+  <ServicePoints />
+
+  <!-- 전국 노선 지도 -->
+  <RouteMap />
+
+  <!-- 견적 CTA -->
+  <QuoteCTA />
+</BaseLayout>
+
+<style>
+  /* ── 페이지 히어로 ── */
+  .page-hero {
+    background:
+      radial-gradient(ellipse 60% 70% at 80% 50%, rgba(14, 80, 165, 0.25) 0%, transparent 65%),
+      linear-gradient(160deg, rgba(4,12,34,0.98) 0%, rgba(10,32,72,0.96) 100%);
+    padding-block: 3.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 72px 72px;
+    pointer-events: none;
+  }
+
+  .page-hero__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-hero__label {
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .page-hero__title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+
+  .page-hero__sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__nav {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .page-hero__nav a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  .page-hero__nav a:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+  }
+
+  .page-hero__nav span { color: rgba(255,255,255,0.25); }
+
+  /* ── 서비스 목록 ── */
+  .svc-list {
+    background: var(--color-bg-subtle);
+  }
+
+  .svc-list__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>

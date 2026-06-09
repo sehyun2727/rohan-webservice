@@ -1,0 +1,143 @@
+---
+const points = [
+  {
+    id: 'loading',
+    label: '상차',
+    desc: '친절한 서비스로\n빠르고 정확하게 상차해 드립니다',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="28" width="40" height="12" rx="2"/>
+      <path d="M12 28V18h24v10"/>
+      <path d="M20 18V10h8v8"/>
+      <path d="M24 10V4"/>
+      <path d="M20 4h8"/>
+    </svg>`,
+  },
+  {
+    id: 'transport',
+    label: '수송',
+    desc: '최적의 환경에서\n신속·정확하게 수송해 드립니다',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="16" width="28" height="20" rx="2"/>
+      <path d="M30 22h10l6 8v6H30V22z"/>
+      <circle cx="10" cy="38" r="4"/>
+      <circle cx="36" cy="38" r="4"/>
+      <path d="M14 38h18"/>
+      <path d="M6 22h18"/>
+    </svg>`,
+  },
+  {
+    id: 'storage',
+    label: '보관',
+    desc: '안전하고 신뢰할 수 있게\n보관해 드립니다',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 14L24 4l20 10v26l-20 8L4 40V14z"/>
+      <path d="M24 4v34"/>
+      <path d="M4 14l20 10 20-10"/>
+      <path d="M14 9l20 10"/>
+    </svg>`,
+  },
+  {
+    id: 'unloading',
+    label: '하역',
+    desc: '오랜 노하우로\n실수 없이 하역해 드립니다',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="8" width="40" height="12" rx="2"/>
+      <path d="M12 20v10h24V20"/>
+      <path d="M20 30v8h8v-8"/>
+      <path d="M24 38v6"/>
+      <path d="M20 44h8"/>
+    </svg>`,
+  },
+];
+---
+
+<section class="svc-points" aria-label="물류 서비스 운영">
+  <div class="container svc-points__grid">
+    {points.map((p) => (
+      <div class="svc-point">
+        <div class="svc-point__icon" set:html={p.icon} />
+        <h3 class="svc-point__label">{p.label}</h3>
+        <p class="svc-point__desc">{p.desc}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .svc-points {
+    background: #fff;
+    padding-block: 3.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .svc-points__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .svc-point {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--color-border);
+    transition: background var(--transition), transform var(--transition);
+  }
+
+  .svc-point:last-child {
+    border-right: none;
+  }
+
+  .svc-point:hover {
+    background: var(--color-bg-subtle);
+    transform: translateY(-4px);
+  }
+
+  .svc-point__icon {
+    width: 52px;
+    height: 52px;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+
+  .svc-point__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .svc-point__label {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+  }
+
+  .svc-point__desc {
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    white-space: pre-line;
+    word-break: keep-all;
+  }
+
+  @media (max-width: 768px) {
+    .svc-points__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .svc-point:nth-child(2) { border-right: none; }
+    .svc-point:nth-child(1),
+    .svc-point:nth-child(2) {
+      border-bottom: 1px solid var(--color-border);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .svc-points__grid { grid-template-columns: 1fr; }
+    .svc-point { border-right: none; border-bottom: 1px solid var(--color-border); }
+    .svc-point:last-child { border-bottom: none; }
+  }
+</style>

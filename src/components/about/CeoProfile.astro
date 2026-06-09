@@ -1,0 +1,125 @@
+---
+import { company } from '../../data/company.js';
+
+// 대표이사 약력을 여기에 입력하세요
+const career = [
+  { year: '0000', desc: '[약력 항목을 입력해 주세요]' },
+  { year: '0000', desc: '[약력 항목을 입력해 주세요]' },
+  { year: '0000', desc: '[약력 항목을 입력해 주세요]' },
+];
+---
+
+<section class="ceo-profile" aria-label="대표이사 소개">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-label">CEO Profile</span>
+      <h2 class="section-title">대표이사 소개</h2>
+    </div>
+
+    <div class="ceo-profile__card" data-aos="fade-up">
+      <div class="ceo-profile__info">
+        <p class="ceo-profile__name">{company.ceo}</p>
+        <p class="ceo-profile__title">대표이사</p>
+        <p class="ceo-profile__bio">
+          <!-- 대표이사 소개 문구를 입력해 주세요 -->
+          [대표이사 소개 문구를 입력해 주세요.]
+        </p>
+      </div>
+
+      <div class="ceo-profile__career">
+        <h3 class="ceo-profile__career-title">주요 약력</h3>
+        <ul class="ceo-profile__career-list">
+          {career.map((c) => (
+            <li>
+              <span class="ceo-profile__year">{c.year}</span>
+              <span class="ceo-profile__desc">{c.desc}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ceo-profile {
+    padding-block: var(--section-py);
+    background: var(--color-bg-subtle);
+  }
+
+  .ceo-profile__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 3rem;
+    margin-top: 3rem;
+  }
+
+  .ceo-profile__name {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .ceo-profile__title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.04em;
+  }
+
+  .ceo-profile__bio {
+    font-size: 0.95rem;
+    line-height: 1.9;
+    color: var(--color-text-muted);
+  }
+
+  .ceo-profile__career-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .ceo-profile__career-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .ceo-profile__career-list li {
+    display: flex;
+    gap: 1.25rem;
+    align-items: baseline;
+    font-size: 0.9rem;
+  }
+
+  .ceo-profile__year {
+    font-weight: 700;
+    color: var(--color-primary);
+    min-width: 42px;
+    flex-shrink: 0;
+  }
+
+  .ceo-profile__desc {
+    color: var(--color-text);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 768px) {
+    .ceo-profile__card {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 2rem;
+    }
+  }
+</style>

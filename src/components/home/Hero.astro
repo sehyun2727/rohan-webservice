@@ -1,0 +1,320 @@
+---
+import { company } from '../../data/company.js';
+
+const credentials = [
+  { value: '약 20대', label: '직영 냉동탑차' },
+  { value: '3개소',   label: '물류센터' },
+  { value: '2007년',  label: '설립' },
+  { value: '전국',    label: '배송 네트워크' },
+];
+---
+
+<section class="hero" aria-label="메인 히어로">
+  <div class="container hero__content">
+
+    <!-- 신뢰 배지 -->
+    <div class="hero__badge">
+      <span class="hero__badge-dot" aria-hidden="true"></span>
+      설립 {company.founded}년 · 직영 차량 약 20대 · 전국 배송
+    </div>
+
+    <!-- 영문 태그라인 -->
+    <p class="hero__en en">{company.tagline}</p>
+
+    <!-- 메인 헤드라인 -->
+    <h1 class="hero__title">
+      콜드체인 물류<br />
+      <span class="hero__title-em">믿을 수 있는 파트너</span>
+    </h1>
+
+    <!-- 설명 -->
+    <p class="hero__desc">
+      냉동·냉장·상온을 아우르는 전문 콜드체인 물류기업입니다.<br />
+      전국 운송 · 3PL 물류대행 · 냉동창고 임대를 한 번에.
+    </p>
+
+    <!-- CTA -->
+    <div class="hero__actions">
+      <a href="/quote" class="btn btn--primary btn--lg">견적문의 하기</a>
+      <a href="/services" class="btn btn--ghost btn--lg">서비스 보기</a>
+    </div>
+
+    <!-- 구분선 -->
+    <div class="hero__divider" aria-hidden="true"></div>
+
+    <!-- 핵심 지표 스트립 -->
+    <div class="hero__creds">
+      {credentials.map((c, i) => (
+        <>
+          {i > 0 && <span class="hero__creds-sep" aria-hidden="true"></span>}
+          <div class="hero__cred">
+            <span class="hero__cred-value">{c.value}</span>
+            <span class="hero__cred-label">{c.label}</span>
+          </div>
+        </>
+      ))}
+    </div>
+
+  </div>
+
+  <!-- 속도감 모션 라인 -->
+  <div class="hero__streaks" aria-hidden="true">
+    <span></span><span></span><span></span>
+    <span></span><span></span>
+  </div>
+
+  <div class="hero__scroll" aria-hidden="true">
+    <div class="hero__scroll-bar"></div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: calc(100vh - var(--header-height));
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse 70% 65% at 15% 55%, rgba(14, 80, 165, 0.28) 0%, transparent 60%),
+      linear-gradient(160deg,
+        rgba(4, 12, 34, 0.99) 0%,
+        rgba(10, 32, 72, 0.97) 45%,
+        rgba(6, 18, 50, 0.99) 100%
+      ),
+      var(--hero-bg, none);
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* 격자 오버레이 — 천천히 이동 */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 72px 72px;
+    pointer-events: none;
+    animation: gridDrift 12s linear infinite;
+  }
+
+  @keyframes gridDrift {
+    from { background-position: 0 0, 0 0; }
+    to   { background-position: 72px 72px, 72px 72px; }
+  }
+
+  /* 우측 글로우 — 천천히 숨쉬기 */
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -5%;
+    top: 5%;
+    width: 50vw;
+    height: 90%;
+    background: radial-gradient(ellipse at center, rgba(14,165,233,0.09) 0%, transparent 65%);
+    pointer-events: none;
+    animation: glowPulse 5s ease-in-out infinite;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50%       { opacity: 1;   transform: scale(1.08); }
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    padding-block: 5rem;
+    max-width: 700px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  /* ── 배지 ─────────────────────────────────────── */
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.45rem 1.1rem;
+    border: 1px solid rgba(14, 165, 233, 0.42);
+    border-radius: 100px;
+    background: rgba(14, 165, 233, 0.08);
+    color: var(--color-accent);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.75rem;
+  }
+
+  .hero__badge-dot {
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    animation: badgePulse 2.2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  /* ── 영문 태그라인 ───────────────────────────── */
+  .hero__en {
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 1rem;
+  }
+
+  /* ── 메인 헤드라인 ──────────────────────────── */
+  .hero__title {
+    font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+    font-weight: 900;
+    line-height: 1.15;
+    color: #fff;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__title-em {
+    color: var(--color-accent);
+  }
+
+  /* ── 설명 ────────────────────────────────────── */
+  .hero__desc {
+    font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+    line-height: 1.88;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── CTA ─────────────────────────────────────── */
+  .hero__actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+    justify-content: center;
+  }
+
+  /* ── 구분선 ─────────────────────────────────── */
+  .hero__divider {
+    height: 1px;
+    background: linear-gradient(to right,
+      transparent,
+      rgba(255,255,255,0.1) 20%,
+      rgba(255,255,255,0.1) 80%,
+      transparent
+    );
+    margin-bottom: 2rem;
+  }
+
+  /* ── 지표 스트립 ─────────────────────────────── */
+  .hero__creds {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    row-gap: 1rem;
+    justify-content: center;
+  }
+
+  .hero__creds-sep {
+    display: block;
+    width: 1px;
+    height: 28px;
+    background: rgba(255,255,255,0.14);
+    margin-inline: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .hero__cred {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+  }
+
+  .hero__cred-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .hero__cred-label {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.38);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── 속도감 라인 ─────────────────────────────── */
+  .hero__streaks {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .hero__streaks span {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(14,165,233,0.35), transparent);
+    animation: streakSlide var(--dur, 4s) linear var(--delay, 0s) infinite;
+    opacity: 0;
+  }
+
+  .hero__streaks span:nth-child(1) { top: 22%; width: 38%; --dur: 5s;   --delay: 0s; }
+  .hero__streaks span:nth-child(2) { top: 40%; width: 55%; --dur: 7s;   --delay: 1.2s; }
+  .hero__streaks span:nth-child(3) { top: 58%; width: 28%; --dur: 4.5s; --delay: 0.6s; }
+  .hero__streaks span:nth-child(4) { top: 72%; width: 45%; --dur: 6s;   --delay: 2s; }
+  .hero__streaks span:nth-child(5) { top: 85%; width: 32%; --dur: 5.5s; --delay: 0.3s; }
+
+  @keyframes streakSlide {
+    0%   { left: -60%; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { left: 110%; opacity: 0; }
+  }
+
+  /* ── 스크롤 힌트 ─────────────────────────────── */
+  .hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  .hero__scroll-bar {
+    width: 1.5px;
+    height: 48px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+    animation: scrollPulse 2.2s ease-in-out infinite;
+    transform-origin: top;
+    margin: 0 auto;
+  }
+
+  @keyframes scrollPulse {
+    0%   { transform: scaleY(0); opacity: 1; }
+    65%  { transform: scaleY(1); opacity: 1; }
+    100% { transform: scaleY(1); opacity: 0; }
+  }
+
+  /* ── Responsive ─────────────────────────────── */
+  @media (max-width: 768px) {
+    .hero__content   { padding-block: 3.5rem 5rem; }
+    .hero__actions   { flex-direction: column; }
+    .hero__actions .btn { text-align: center; }
+    .hero__scroll    { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero__creds-sep { margin-inline: 1rem; }
+  }
+</style>

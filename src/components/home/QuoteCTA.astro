@@ -1,0 +1,127 @@
+---
+import { company } from '../../data/company.js';
+---
+
+<section class="quote-cta" aria-label="견적문의 CTA">
+  <div class="container quote-cta__inner">
+    <div class="quote-cta__text">
+      <span class="quote-cta__label en">Get a Quote</span>
+      <h2 class="quote-cta__title">지금 바로 견적을 받아보세요</h2>
+      <p class="quote-cta__desc">
+        화물정보를 입력하시면 맞춤 견적을 받아보실 수 있습니다.<br />
+        전화로 연락 주시면 더욱 빠른 견적문의가 가능합니다.
+      </p>
+      <div class="quote-cta__contacts">
+        <a href={`tel:${company.tel.replace(/-/g, '')}`} class="quote-cta__contact">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 3a1 1 0 011-1h2.5l1 3-1.5 1.5a11 11 0 004.5 4.5L11 9.5l3 1V13a1 1 0 01-1 1A12 12 0 012 3z"
+              stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          {company.tel}
+        </a>
+        <span class="quote-cta__contact-divider">|</span>
+        <a href={`tel:${company.mobile.replace(/-/g, '')}`} class="quote-cta__contact">
+          운영팀장 {company.mobile}
+        </a>
+      </div>
+    </div>
+    <a href="/quote" class="btn btn--inverted btn--lg quote-cta__btn">
+      견적서 작성하기
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  .quote-cta {
+    background: var(--color-primary);
+    padding-block: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+  }
+
+  .quote-cta__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .quote-cta__label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 0.75rem;
+  }
+
+  .quote-cta__title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .quote-cta__desc {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-cta__contacts {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .quote-cta__contact {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    transition: color var(--transition);
+  }
+
+  .quote-cta__contact:hover { color: #fff; }
+
+  .quote-cta__contact-divider {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.85rem;
+  }
+
+  .quote-cta__btn {
+    flex-shrink: 0;
+    font-size: 1rem;
+    padding: 1rem 2.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .quote-cta__inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .quote-cta__contacts { justify-content: center; }
+    .quote-cta__btn { width: 100%; max-width: 320px; }
+  }
+</style>

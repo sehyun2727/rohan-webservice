@@ -1,0 +1,256 @@
+---
+import { markers, nodes, routes, mapConfig } from '../../data/routeMap.js';
+import 'leaflet/dist/leaflet.css';
+
+const mapPayload = { markers, nodes, routes, mapConfig };
+---
+
+<section class="route-map-section" aria-label="전국 운송 노선 지도">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-label">Route Network</span>
+      <h2 class="section-title">전국 운송 노선</h2>
+      <p class="section-desc">
+        안성·칠곡 직영 거점을 중심으로 전국을 연결하는 로한물류의 노선 네트워크입니다.
+      </p>
+    </div>
+
+    <div class="route-map-section__body">
+      <div id="route-map" class="route-map-el" aria-label="전국 운송 노선 인터랙티브 지도"></div>
+
+      <div class="route-map-section__legend">
+        <div class="legend-item legend-item--hub">
+          <span class="legend-dot"></span>직영 거점 (허브)
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot"></span>배송 권역
+        </div>
+        <div class="legend-item legend-item--line">
+          <span class="legend-line"></span>영남 노선
+        </div>
+        <div class="legend-item legend-item--jeolla">
+          <span class="legend-line legend-line--jeolla"></span>호남 노선
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ mapPayload }}>
+  window.__rohanMap = mapPayload;
+</script>
+
+<script>
+  import L from 'leaflet';
+
+  const { markers, nodes, routes, mapConfig } = (window as any).__rohanMap;
+
+  const map = L.map('route-map', {
+    center: mapConfig.center,
+    zoom: mapConfig.zoom,
+    zoomControl: true,
+    scrollWheelZoom: false,
+  });
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 13,
+  }).addTo(map);
+
+  // 권역 원
+  const zones = [
+    { center: [37.008, 127.27], radius: 42000, label: '수도권',        color: '#0ea5e9' },
+    { center: [35.62, 128.82], radius: 65000, label: '영남권',        color: '#10b981' },
+    { center: [35.16, 127.52], radius: 58000, label: '사천·진주·호남', color: '#f59e0b' },
+  ];
+
+  zones.forEach((z: any) => {
+    L.circle(z.center, {
+      radius: z.radius,
+      color: z.color,
+      weight: 2,
+      opacity: 0.75,
+      fillColor: z.color,
+      fillOpacity: 0.08,
+    }).bindTooltip(z.label, {
+      permanent: true,
+      direction: 'center',
+      className: 'zone-label',
+    }).addTo(map);
+  });
+
+  // 노선 폴리라인
+  routes.forEach((route: any) => {
+    const isJeolla = route.type === 'jeolla';
+    L.polyline(route.coords, {
+      color: isJeolla ? '#f59e0b' : '#0ea5e9',
+      weight: 2.5,
+      opacity: 0.8,
+      dashArray: isJeolla ? '6 5' : undefined,
+    }).addTo(map);
+  });
+
+  // 일반 도시 노드
+  nodes.forEach((node: any) => {
+    L.circleMarker(node.coords, {
+      radius: 5,
+      fillColor: '#fff',
+      color: '#1b4f8a',
+      weight: 2,
+      fillOpacity: 1,
+    }).bindTooltip(node.label, {
+      permanent: false,
+      direction: 'top',
+      className: 'map-tooltip',
+    }).addTo(map);
+  });
+
+  // 거점·창고 마커
+  markers.forEach((m: any) => {
+    const isHub = m.type === 'hub';
+    const isHQ  = m.type === 'hq';
+    const cls   = isHub ? 'map-marker--hub' : isHQ ? 'map-marker--hq' : 'map-marker--wh';
+    const icon  = L.divIcon({
+      className: '',
+      html: `<div class="map-marker ${cls}"><span>${m.label}</span></div>`,
+      iconAnchor: [0, 12],
+    });
+    L.marker(m.coords, { icon })
+      .bindPopup(`<b>${m.label}</b><br/>${m.address}`)
+      .addTo(map);
+  });
+
+  // 컨테이너 크기 변경 시 지도 재계산
+  setTimeout(() => map.invalidateSize(), 100);
+</script>
+
+<style>
+  .route-map-section {
+    padding-block: var(--section-py);
+    background: var(--color-bg-dark);
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+  }
+
+  .route-map-section .section-title { color: #fff; }
+  .route-map-section .section-label { color: var(--color-accent); }
+  .route-map-section .section-desc  { color: rgba(255,255,255,0.55); }
+
+  .route-map-section__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .route-map-el {
+    width: 100%;
+    height: 540px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    isolation: isolate;
+  }
+
+  /* 범례 */
+  .route-map-section__legend {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .legend-dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #1b4f8a;
+    flex-shrink: 0;
+  }
+
+  .legend-item--hub .legend-dot {
+    background: var(--color-accent);
+    border-color: #fff;
+    width: 12px; height: 12px;
+  }
+
+  .legend-line {
+    display: inline-block;
+    width: 24px; height: 2.5px;
+    background: var(--color-accent);
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+
+  .legend-line--jeolla {
+    background: var(--color-point);
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--color-point) 0, var(--color-point) 5px,
+      transparent 5px, transparent 9px
+    );
+  }
+
+  @media (max-width: 600px) {
+    .route-map-el { height: 380px; }
+    .route-map-section__legend { gap: 1rem; }
+  }
+</style>
+
+<style is:global>
+  .map-marker {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    font-family: 'Pretendard', sans-serif;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    color: #fff;
+    background: #1b4f8a;
+  }
+
+  .map-marker--hub { background: #0ea5e9; font-size: 12px; padding: 4px 10px; }
+  .map-marker--hq  { background: #0f3566; }
+  .map-marker--wh  { background: #2d6bb5; }
+
+  .map-tooltip {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 12px;
+    background: rgba(15,31,61,0.92);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 3px 8px;
+    box-shadow: none;
+  }
+
+  .map-tooltip::before { display: none; }
+
+  .zone-label {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: rgba(15, 31, 61, 0.7);
+    white-space: nowrap;
+  }
+
+  .zone-label::before { display: none; }
+
+  .leaflet-popup-content-wrapper {
+    font-family: 'Pretendard', sans-serif;
+    font-size: 13px;
+    border-radius: 8px;
+  }
+</style>

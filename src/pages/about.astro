@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Greeting from '../components/about/Greeting.astro';
+import CeoProfile from '../components/about/CeoProfile.astro';
+import Philosophy from '../components/about/Philosophy.astro';
+import CompanyInfo from '../components/about/CompanyInfo.astro';
+import History from '../components/about/History.astro';
+import WhyUs from '../components/home/WhyUs.astro';
+import ClientLogos from '../components/home/ClientLogos.astro';
+---
+
+<BaseLayout
+  title="회사소개"
+  description="(주)로한물류 회사소개 — 대표이사 인사말, 경영이념, 기업개요, 연혁, 거래처"
+>
+  <!-- 페이지 헤더 -->
+  <div class="page-hero">
+    <div class="container page-hero__inner">
+      <p class="page-hero__label en">About Us</p>
+      <h1 class="page-hero__title">회사소개</h1>
+      <p class="page-hero__sub">설립 이래 전국 콜드체인 물류를 선도해 온 (주)로한물류를 소개합니다.</p>
+    </div>
+  </div>
+
+  <Greeting />
+  <CeoProfile />
+  <Philosophy />
+  <CompanyInfo />
+  <History />
+  <WhyUs />
+  <ClientLogos />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    background:
+      linear-gradient(160deg,
+        rgba(4, 12, 34, 0.97) 0%,
+        rgba(10, 32, 72, 0.95) 100%
+      );
+    padding-block: 5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 72px 72px;
+    pointer-events: none;
+  }
+
+  .page-hero__inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-hero__label {
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+  }
+</style>

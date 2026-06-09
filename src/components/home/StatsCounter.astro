@@ -1,0 +1,166 @@
+---
+import { vehicleStats } from '../../data/vehicles.js';
+import { company } from '../../data/company.js';
+
+const currentYear = new Date().getFullYear();
+
+const stats = [
+  {
+    value: vehicleStats.count,
+    unit: '대',
+    label: '직영 냉동탑차',
+    sub: '5t ~ 11t 전 차종',
+  },
+  {
+    value: 2,
+    unit: '개소',
+    label: '직영 물류센터',
+    sub: '안성 · 진주',
+  },
+  {
+    value: company.founded,
+    unit: '년',
+    label: '설립',
+    sub: `${currentYear - company.founded}년 물류 경험`,
+  },
+  {
+    value: 3,
+    unit: '가지',
+    label: '온도대 운용',
+    sub: '냉동 · 냉장 · 상온',
+  },
+];
+---
+
+<section class="stats" aria-label="핵심 지표">
+  <div class="container stats__grid">
+    {stats.map((s) => (
+      <div class="stat-item">
+        <div class="stat-item__number">
+          <span class="stat-item__count" data-count={s.value}>0</span>
+          <span class="stat-item__unit">{s.unit}</span>
+        </div>
+        <p class="stat-item__label">{s.label}</p>
+        <p class="stat-item__sub">{s.sub}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  function easeOutCubic(t: number) {
+    return 1 - Math.pow(1 - t, 3);
+  }
+
+  function animateCounter(el: Element, target: number, duration = 1400) {
+    const startVal = target > 200 ? target - 30 : 0;
+    const startTime = performance.now();
+
+    function tick(now: number) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutCubic(progress);
+      const current = Math.round(startVal + (target - startVal) * eased);
+      el.textContent = current.toLocaleString();
+      if (progress < 1) requestAnimationFrame(tick);
+      else el.textContent = target.toLocaleString();
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const counters = entry.target.querySelectorAll<HTMLElement>('[data-count]');
+        counters.forEach((el) => {
+          const target = Number(el.dataset.count);
+          animateCounter(el, target);
+        });
+        observer.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  const section = document.querySelector('.stats');
+  if (section) observer.observe(section);
+</script>
+
+<style>
+  .stats {
+    background: #fff;
+    padding-block: 3.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-item {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border-right: 1px solid var(--color-border);
+    transition: transform var(--transition);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-item:hover { transform: translateY(-4px); }
+
+  .stat-item__number {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-item__count {
+    font-size: clamp(2.2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--color-primary);
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+
+  .stat-item__unit {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary-light);
+  }
+
+  .stat-item__label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-item__sub {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .stats__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(1),
+    .stat-item:nth-child(2) {
+      border-bottom: 1px solid var(--color-border);
+    }
+  }
+
+  @media (max-width: 400px) {
+    .stats__grid { grid-template-columns: 1fr; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--color-border); }
+    .stat-item:last-child { border-bottom: none; }
+  }
+</style>

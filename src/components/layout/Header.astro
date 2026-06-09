@@ -1,0 +1,272 @@
+---
+const navLinks = [
+  { label: '회사소개', href: '/about' },
+  { label: '서비스',   href: '/services' },
+  { label: '차량소개', href: '/vehicles' },
+  { label: '창고소개', href: '/warehouses' },
+];
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="header">
+  <div class="container header__inner">
+    <a href="/" class="header__logo" aria-label="로한물류 홈">
+      <img src="/logo.png" alt="로한물류" height="44" />
+    </a>
+
+    <nav class="header__nav" id="main-nav" aria-label="메인 네비게이션">
+      <ul class="header__nav-list">
+        <li>
+          <a
+            href="/"
+            class:list={['header__link', { 'header__link--active': isActive('/') }]}
+          >홈</a>
+        </li>
+        {navLinks.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              class:list={['header__link', { 'header__link--active': isActive(href) }]}
+            >{label}</a>
+          </li>
+        ))}
+        <li>
+          <a
+            href="/quote"
+            class:list={['header__cta', { 'header__cta--active': isActive('/quote') }]}
+          >견적문의</a>
+        </li>
+      </ul>
+    </nav>
+
+    <button
+      class="header__hamburger"
+      id="hamburger-btn"
+      aria-label="메뉴 열기"
+      aria-expanded="false"
+      aria-controls="main-nav"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('hamburger-btn');
+  const nav = document.getElementById('main-nav');
+
+  btn?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('header__nav--open');
+    btn.setAttribute('aria-expanded', String(open ?? false));
+    btn.classList.toggle('header__hamburger--active', open ?? false);
+  });
+
+  nav?.querySelectorAll('a').forEach((a) => {
+    a.addEventListener('click', () => {
+      nav.classList.remove('header__nav--open');
+      btn?.classList.remove('header__hamburger--active');
+      btn?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    height: var(--header-height);
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  /* Logo */
+  .header__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .header__logo img {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  /* Text fallback shown when logo.png is missing */
+  .header__logo-fallback {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    letter-spacing: -0.02em;
+    display: none;
+  }
+
+  .header__logo img[src="/logo.png"]:not([complete]) + .header__logo-fallback,
+  .header__logo img.broken + .header__logo-fallback {
+    display: inline;
+  }
+
+  /* Nav list */
+  .header__nav-list {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  /* Nav link */
+  .header__link {
+    position: relative;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text);
+    padding-bottom: 3px;
+    transition: color var(--transition);
+  }
+
+  .header__link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition);
+  }
+
+  .header__link:hover,
+  .header__link--active {
+    color: var(--color-primary);
+  }
+
+  .header__link:hover::after,
+  .header__link--active::after {
+    transform: scaleX(1);
+  }
+
+  /* CTA button */
+  .header__cta {
+    background: var(--color-primary);
+    color: #fff;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background var(--transition), transform var(--transition);
+    white-space: nowrap;
+  }
+
+  .header__cta:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-1px);
+  }
+
+  .header__cta--active {
+    background: var(--color-primary-dark);
+  }
+
+  /* Hamburger */
+  .header__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    flex-shrink: 0;
+  }
+
+  .header__hamburger span {
+    display: block;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: transform var(--transition), opacity var(--transition);
+    transform-origin: center;
+  }
+
+  .header__hamburger--active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .header__hamburger--active span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .header__hamburger--active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .header__hamburger {
+      display: flex;
+    }
+
+    .header__nav {
+      display: none;
+      position: absolute;
+      top: var(--header-height);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+    }
+
+    .header__nav--open {
+      display: block;
+    }
+
+    .header__nav-list {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0.75rem;
+    }
+
+    .header__link,
+    .header__cta {
+      display: block;
+      padding: 0.875rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+    }
+
+    .header__link::after {
+      display: none;
+    }
+
+    .header__link--active {
+      background: var(--color-bg-subtle);
+    }
+
+    .header__cta {
+      text-align: center;
+      margin-top: 0.25rem;
+    }
+  }
+</style>

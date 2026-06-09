@@ -1,0 +1,223 @@
+---
+// 전국 운송 네트워크 미리보기 (홈)
+// 실제 South Korea 외곽선(Natural Earth 50m) + 로한물류 문어발 노선 토폴로지를 동일 투영으로 생성.
+// 허브: 안성(수도권/전라 거점), 칠곡(영남 환적). 담양은 칠곡과 직접 연결하지 않음.
+const KOREA_PATH = "M 45.8,84.3 L 47.9,82.7 L 48.0,80.5 L 48.0,73.0 L 53.9,67.8 L 62.3,57.2 L 66.4,51.4 L 71.0,46.0 L 76.5,42.4 L 81.8,40.6 L 90.2,39.9 L 106.2,40.6 L 109.3,40.0 L 120.5,39.4 L 123.1,40.4 L 131.2,41.0 L 140.2,40.3 L 144.7,38.7 L 148.9,36.1 L 152.6,31.2 L 156.3,22.3 L 160.4,15.3 L 162.7,14.0 L 179.2,51.4 L 194.9,75.5 L 208.2,93.0 L 227.3,126.7 L 232.9,144.7 L 233.4,155.8 L 236.6,171.2 L 233.9,180.0 L 234.7,193.8 L 233.5,201.0 L 231.1,206.2 L 231.1,216.3 L 231.8,221.7 L 231.9,228.8 L 233.4,231.6 L 235.6,232.6 L 239.0,230.0 L 243.2,228.9 L 242.5,237.5 L 237.4,259.3 L 232.9,275.1 L 226.9,288.9 L 219.2,301.5 L 209.9,306.5 L 203.4,308.2 L 191.0,308.9 L 180.8,306.7 L 171.9,308.3 L 168.4,310.9 L 165.7,315.4 L 167.7,322.4 L 167.4,327.5 L 163.6,327.1 L 156.1,324.1 L 147.8,323.7 L 143.9,322.3 L 140.0,314.9 L 136.0,315.1 L 129.1,319.5 L 118.4,320.5 L 114.7,322.9 L 113.4,325.9 L 114.9,329.8 L 120.3,334.9 L 118.5,340.0 L 112.9,342.6 L 108.4,336.3 L 105.6,330.1 L 102.4,329.7 L 97.6,331.5 L 96.6,338.2 L 98.8,342.7 L 102.6,348.0 L 97.3,354.1 L 96.0,358.4 L 92.2,361.6 L 82.0,354.6 L 83.5,349.7 L 87.9,345.0 L 88.4,340.1 L 87.0,337.2 L 72.5,349.6 L 63.5,363.6 L 58.7,362.6 L 56.7,359.0 L 53.9,357.5 L 44.3,366.5 L 42.5,373.7 L 38.9,374.0 L 37.4,371.0 L 37.2,364.5 L 35.6,359.0 L 25.6,351.0 L 21.0,344.0 L 23.4,340.1 L 31.8,342.2 L 38.5,341.9 L 37.1,338.6 L 35.0,337.1 L 39.4,335.2 L 43.1,331.4 L 40.0,330.3 L 35.4,332.6 L 31.5,331.5 L 29.9,322.3 L 25.2,312.9 L 22.8,303.8 L 27.4,298.6 L 29.8,290.4 L 34.1,278.6 L 36.3,274.8 L 42.3,272.1 L 44.5,269.0 L 41.2,267.4 L 35.9,266.1 L 36.0,262.7 L 39.6,260.8 L 43.6,257.0 L 51.4,252.5 L 53.8,243.9 L 51.6,241.7 L 46.7,239.7 L 47.8,235.3 L 49.8,232.0 L 49.1,230.0 L 43.3,224.4 L 39.5,219.3 L 40.7,213.5 L 39.8,204.7 L 40.3,197.3 L 40.0,193.3 L 37.3,184.2 L 36.0,175.2 L 32.3,176.5 L 29.3,178.8 L 18.7,175.6 L 15.4,175.4 L 14.0,168.7 L 17.8,160.4 L 26.8,153.1 L 32.0,152.2 L 35.9,149.0 L 42.0,148.0 L 49.3,152.9 L 55.9,153.9 L 59.6,162.5 L 61.8,164.3 L 62.3,161.1 L 67.6,157.5 L 68.8,154.7 L 67.7,153.2 L 61.6,151.7 L 56.1,141.0 L 55.4,136.4 L 53.4,133.5 L 56.3,125.0 L 50.0,115.3 L 46.9,112.3 L 47.3,103.6 L 44.0,98.0 L 42.2,95.0 L 41.1,89.8 L 42.0,87.4 L 44.9,86.5 L 45.8,84.3 Z";
+
+const routeNodes = [
+  { label: '성남', x: 76.9, y: 114.5, hub: false },
+  { label: '광주', x: 91.5, y: 113.8, hub: false },
+  { label: '안성', x: 89.2, y: 149.0, hub: true },
+  { label: '칠곡', x: 170.5, y: 233.6, hub: true },
+  { label: '함안', x: 164.9, y: 294.0, hub: false },
+  { label: '김해', x: 197.3, y: 297.7, hub: false },
+  { label: '기장', x: 219.7, y: 296.3, hub: false },
+  { label: '진주', x: 144.8, y: 301.7, hub: false },
+  { label: '사천', x: 141.9, y: 316.4, hub: false },
+  { label: '담양', x: 69.6, y: 289.9, hub: false },
+];
+
+const routeLines = [
+  { x1: 78.9, y1: 114.5, x2: 89.2, y2: 149.0 },
+  { x1: 87.5, y1: 113.8, x2: 89.2, y2: 149.0 },
+  { x1: 89.2, y1: 149.0, x2: 170.5, y2: 233.6 },
+  { x1: 170.5, y1: 233.6, x2: 164.9, y2: 294.0 },
+  { x1: 170.5, y1: 233.6, x2: 197.3, y2: 297.7 },
+  { x1: 170.5, y1: 233.6, x2: 219.7, y2: 296.3 },
+  { x1: 170.5, y1: 233.6, x2: 144.8, y2: 301.7 },
+  { x1: 144.8, y1: 301.7, x2: 69.6, y2: 289.9 },
+  { x1: 141.9, y1: 316.4, x2: 69.6, y2: 289.9 },
+  { x1: 69.6, y1: 289.9, x2: 89.2, y2: 149.0 },
+];
+---
+
+<section class="route-preview" aria-label="전국 운송 네트워크">
+  <div class="container route-preview__inner">
+
+    <div class="route-preview__text" data-aos="fade-right">
+      <span class="section-label">Nationwide Network</span>
+      <h2 class="section-title section-title--light">전국 운송 네트워크</h2>
+      <p class="route-preview__desc">
+        수도권에서 영남·호남까지, 로한물류의 냉동·냉장 노선이 전국을 잇습니다.<br />
+        안성·칠곡 거점을 중심으로 환적·분기하여 화물의 신선도를 지키며 배송합니다.
+      </p>
+      <ul class="route-preview__points">
+        <li>안성(수도권) · 칠곡(영남 환적) 거점 운영</li>
+        <li>냉동 · 냉장 · 상온 전 온도대 대응</li>
+        <li>영남 · 호남 권역 직배송 노선 확보</li>
+      </ul>
+      <a href="/services" class="btn btn--inverted route-preview__cta">노선 자세히 보기</a>
+    </div>
+
+    <div class="route-preview__map" data-aos="fade-left" data-aos-delay="150">
+      <svg viewBox="0 0 257.2 388" role="img"
+           aria-label="로한물류 전국 운송 네트워크 지도" class="route-map">
+        <!-- 대한민국 외곽선 (흰색 계열) -->
+        <path class="route-map__land" d={KOREA_PATH} />
+
+        <!-- 노선 (문어발) -->
+        <g class="route-map__lines">
+          {routeLines.map((l) => (
+            <line x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2} />
+          ))}
+        </g>
+
+        <!-- 노드 + 레이블 -->
+        {routeNodes.map((n) => (
+          <g class={n.hub ? 'route-map__node is-hub' : 'route-map__node'}>
+            {n.hub && <circle class="pulse" cx={n.x} cy={n.y} r="6" />}
+            <circle class="dot" cx={n.x} cy={n.y} r={n.hub ? 5 : 3} />
+            <text class="lbl" x={n.x} y={n.y - 8} text-anchor="middle">{n.label}</text>
+          </g>
+        ))}
+      </svg>
+
+      <ul class="route-map__legend" aria-hidden="true">
+        <li class="is-hub"><span></span>거점 · 환적 허브</li>
+        <li><span></span>배송 권역</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .route-preview {
+    background: var(--color-bg-dark);
+    padding-block: var(--section-py);
+  }
+
+  .route-preview__inner {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .route-preview__text .section-title { text-align: left; }
+
+  .route-preview__desc {
+    color: rgba(255, 255, 255, 0.62);
+    line-height: 1.82;
+    margin-block: 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .route-preview__points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 2rem;
+  }
+
+  .route-preview__points li {
+    display: flex; align-items: center; gap: 0.65rem;
+    font-size: 0.875rem; color: rgba(255, 255, 255, 0.72);
+  }
+
+  .route-preview__points li::before {
+    content: ''; display: inline-block;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--color-accent); flex-shrink: 0;
+  }
+
+  .route-preview__map {
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center; gap: 1rem;
+  }
+
+  .route-map {
+    width: 100%; max-width: 300px;
+    filter: drop-shadow(0 10px 34px rgba(0, 0, 0, 0.4));
+  }
+
+  /* 대한민국 땅 - 흰색 계열 */
+  .route-map__land {
+    fill: #eef3f9;
+    stroke: rgba(255, 255, 255, 0.18);
+    stroke-width: 1;
+    stroke-linejoin: round;
+  }
+
+  /* 노선 */
+  .route-map__lines line {
+    stroke: var(--color-accent, #2d6bb5);
+    stroke-width: 1.6;
+    stroke-opacity: 0.7;
+    stroke-linecap: round;
+    stroke-dasharray: 4 5;
+    animation: route-flow 1.6s linear infinite;
+  }
+
+  @keyframes route-flow {
+    to { stroke-dashoffset: -18; }
+  }
+
+  /* 노드 */
+  .route-map__node .dot {
+    fill: #ffffff;
+    stroke: #1b4f8a;
+    stroke-width: 1.5;
+  }
+  .route-map__node.is-hub .dot {
+    fill: var(--color-accent, #2d6bb5);
+    stroke: #ffffff;
+    stroke-width: 1.8;
+  }
+  .route-map__node .pulse {
+    fill: var(--color-accent, #2d6bb5);
+    opacity: 0.45;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: route-pulse 2.4s ease-out infinite;
+  }
+  @keyframes route-pulse {
+    0%   { transform: scale(1);   opacity: 0.5; }
+    70%  { transform: scale(2.6); opacity: 0; }
+    100% { transform: scale(2.6); opacity: 0; }
+  }
+
+  .route-map__node .lbl {
+    font-size: 8.5px;
+    font-weight: 500;
+    fill: #1e293b;
+    paint-order: stroke;
+    stroke: rgba(238, 243, 249, 0.9);
+    stroke-width: 2.4px;
+    stroke-linejoin: round;
+  }
+  .route-map__node.is-hub .lbl {
+    font-weight: 800;
+    fill: #0f2f55;
+  }
+
+  /* 범례 */
+  .route-map__legend {
+    display: flex; gap: 1.25rem;
+    font-size: 0.75rem; color: rgba(255, 255, 255, 0.6);
+  }
+  .route-map__legend li { display: flex; align-items: center; gap: 0.4rem; }
+  .route-map__legend li span {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: #ffffff; border: 1.5px solid #1b4f8a;
+  }
+  .route-map__legend li.is-hub span {
+    background: var(--color-accent, #2d6bb5); border-color: #fff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .route-map__lines line { animation: none; stroke-dasharray: none; }
+    .route-map__node .pulse { animation: none; opacity: 0; }
+  }
+
+  @media (max-width: 900px) {
+    .route-preview__inner { grid-template-columns: 1fr; gap: 3rem; }
+    .route-preview__text .section-title,
+    .route-preview__text { text-align: center; }
+    .route-preview__points { align-items: center; }
+    .route-preview__cta {
+      width: 100%; max-width: 320px; margin-inline: auto;
+      display: block; text-align: center;
+    }
+  }
+</style>

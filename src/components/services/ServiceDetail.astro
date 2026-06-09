@@ -1,0 +1,204 @@
+---
+interface Props {
+  id: string;
+  titleEn: string;
+  title: string;
+  summary: string;
+  description: string;
+  features: string[];
+  reverse?: boolean;
+}
+
+const { id, titleEn, title, summary, description, features, reverse = false } = Astro.props;
+
+const icons: Record<string, string> = {
+  coldchain: `<svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="24" width="48" height="34" rx="4"/>
+    <path d="M52 33h18l8 16v10H52V33z"/>
+    <circle cx="18" cy="62" r="7"/>
+    <circle cx="64" cy="62" r="7"/>
+    <path d="M12 38h22M12 46h18"/>
+    <path d="M36 16l8-4 8 4M44 12v8"/>
+  </svg>`,
+  '3pl': `<svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 36L40 16l32 20v32H8V36z"/>
+    <rect x="30" y="46" width="20" height="22" rx="2"/>
+    <rect x="14" y="40" width="14" height="14" rx="2"/>
+    <rect x="52" y="40" width="14" height="14" rx="2"/>
+    <path d="M40 16v16M24 28l16 8 16-8"/>
+  </svg>`,
+  storage: `<svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="6" y="28" width="68" height="40" rx="3"/>
+    <path d="M6 38h68M6 50h68"/>
+    <path d="M26 28V68M54 28V68"/>
+    <path d="M6 24l34-16 34 16"/>
+    <circle cx="40" cy="44" r="4"/>
+    <path d="M36 44h-8M44 44h8"/>
+  </svg>`,
+};
+
+const accentColors: Record<string, string> = {
+  coldchain: 'var(--color-accent)',
+  '3pl':     'var(--color-point)',
+  storage:   'var(--color-primary-light)',
+};
+---
+
+<div class={`svc-detail ${reverse ? 'svc-detail--reverse' : ''}`} id={id}>
+  <div class="svc-detail__visual" data-aos={reverse ? 'fade-left' : 'fade-right'} style={`--accent: ${accentColors[id]}`}>
+    <div class="svc-detail__icon" set:html={icons[id]} />
+    <span class="svc-detail__en">{titleEn}</span>
+  </div>
+
+  <div class="svc-detail__content" data-aos={reverse ? 'fade-right' : 'fade-left'} data-aos-delay="100">
+    <span class="section-label">{titleEn}</span>
+    <h2 class="svc-detail__title">{title}</h2>
+    <p class="svc-detail__summary">{summary}</p>
+    <p class="svc-detail__desc">{description}</p>
+    <ul class="svc-detail__features">
+      {features.map((f, i) => (
+        <li data-aos="fade-up" data-aos-delay={150 + i * 60}>{f}</li>
+      ))}
+    </ul>
+    <a href="/quote" class="btn btn--primary svc-detail__cta">이 서비스 견적 문의</a>
+  </div>
+</div>
+
+<style>
+  .svc-detail {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 0;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--color-border);
+  }
+
+  .svc-detail--reverse {
+    grid-template-columns: 1.4fr 1fr;
+  }
+
+  .svc-detail--reverse .svc-detail__visual { order: 2; }
+  .svc-detail--reverse .svc-detail__content { order: 1; }
+
+  /* Visual panel */
+  .svc-detail__visual {
+    background: var(--color-bg-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 3rem;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .svc-detail__visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 65%);
+  }
+
+  .svc-detail__icon {
+    width: 100px;
+    height: 100px;
+    color: rgba(255, 255, 255, 0.75);
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+  }
+
+  .svc-detail:hover .svc-detail__icon { color: #fff; }
+
+  .svc-detail__icon svg { width: 100%; height: 100%; }
+
+  .svc-detail__en {
+    font-family: var(--font-en);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Content panel */
+  .svc-detail__content {
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .svc-detail__title {
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 800;
+    color: var(--color-text);
+    line-height: 1.25;
+  }
+
+  .svc-detail__summary {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-left: 3px solid var(--color-point);
+    padding-left: 0.75rem;
+  }
+
+  .svc-detail__desc {
+    font-size: 0.93rem;
+    line-height: 1.9;
+    color: var(--color-text-muted);
+  }
+
+  .svc-detail__features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    list-style: none;
+    margin-top: 0.25rem;
+  }
+
+  .svc-detail__features li {
+    font-size: 0.88rem;
+    color: var(--color-text);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .svc-detail__features li::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .svc-detail__cta { margin-top: 0.75rem; align-self: flex-start; }
+
+  @media (max-width: 900px) {
+    .svc-detail,
+    .svc-detail--reverse {
+      grid-template-columns: 1fr;
+    }
+
+    .svc-detail--reverse .svc-detail__visual { order: 0; }
+    .svc-detail--reverse .svc-detail__content { order: 0; }
+
+    .svc-detail__visual { padding: 3rem 2rem; min-height: 200px; }
+    .svc-detail__icon { width: 72px; height: 72px; }
+    .svc-detail__content { padding: 2.5rem 2rem; }
+    .svc-detail__cta { width: 100%; }
+  }
+</style>

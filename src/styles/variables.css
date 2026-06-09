@@ -1,0 +1,42 @@
+:root {
+  /* Blue palette */
+  --color-primary:       #1b4f8a;
+  --color-primary-dark:  #0f3566;
+  --color-primary-light: #2d6bb5;
+  --color-accent:        #0ea5e9;
+  --color-point:         #f59e0b;
+
+  /* Text */
+  --color-text:          #1e293b;
+  --color-text-muted:    #64748b;
+
+  /* Backgrounds */
+  --color-bg:            #ffffff;
+  --color-bg-subtle:     #f0f6ff;
+  --color-bg-dark:       #0f1f3d;
+
+  /* Borders */
+  --color-border:        #e2e8f0;
+
+  /* Fonts */
+  --font-sans: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --font-en:   'Inter', system-ui, sans-serif;
+
+  /* Layout */
+  --header-height:  72px;
+  --container-max:  1200px;
+  --section-py:     80px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.15);
+
+  /* Animation */
+  --transition: 0.2s ease;
+}
