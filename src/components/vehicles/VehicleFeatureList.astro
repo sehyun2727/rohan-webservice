@@ -1,0 +1,222 @@
+---
+import { vehicleFeatures } from '../../data/vehicles.js';
+---
+
+<section class="vfl" aria-label="차량 특장점">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-label">Vehicle Features</span>
+      <h2 class="section-title">차량 특장점</h2>
+      <p class="section-desc">직영 냉동탑차 약 20대의 핵심 사양을 소개합니다.</p>
+    </div>
+
+    <div class="vfl__list">
+      {vehicleFeatures.map((f, i) => (
+        <article
+          class={`vfl__item ${i % 2 === 1 ? 'vfl__item--reverse' : ''}`}
+          id={f.id}
+          data-aos={i % 2 === 0 ? 'fade-right' : 'fade-left'}
+        >
+          <!-- 사진 -->
+          <div class="vfl__photo-wrap">
+            <img
+              src={f.src}
+              alt={f.alt}
+              loading="lazy"
+              onerror="this.closest('.vfl__photo-wrap').classList.add('vfl__photo-wrap--empty')"
+            />
+            <div class="vfl__placeholder" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <rect x="4" y="10" width="40" height="28" rx="3"/>
+                <path d="M4 32l10-10 8 8 6-6 10 8"/>
+                <circle cx="16" cy="20" r="3"/>
+              </svg>
+              <span>추후 사진 삽입 예정</span>
+            </div>
+            <span class="vfl__index">{String(i + 1).padStart(2, '0')}</span>
+          </div>
+
+          <!-- 설명 -->
+          <div class="vfl__content" data-aos="fade-up" data-aos-delay="120">
+            <span class="vfl__label en">{f.label}</span>
+            <h3 class="vfl__title">{f.title}</h3>
+            <p class="vfl__subtitle">{f.subtitle}</p>
+            <p class="vfl__desc">{f.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vfl {
+    background: #fff;
+    padding-block: var(--section-py);
+  }
+
+  .vfl__list {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    margin-top: 3.5rem;
+  }
+
+  .vfl__item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .vfl__item--reverse {
+    direction: rtl;
+  }
+
+  .vfl__item--reverse > * {
+    direction: ltr;
+  }
+
+  /* 사진 */
+  .vfl__photo-wrap {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .vfl__photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.5s ease;
+  }
+
+  .vfl__item:hover .vfl__photo-wrap img {
+    transform: scale(1.04);
+  }
+
+  .vfl__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    border: 2px dashed var(--color-border);
+    border-radius: inherit;
+  }
+
+  .vfl__placeholder svg {
+    width: 44px;
+    height: 44px;
+    opacity: 0.4;
+  }
+
+  .vfl__placeholder span {
+    font-size: 0.78rem;
+    opacity: 0.6;
+    letter-spacing: 0.03em;
+  }
+
+  .vfl__photo-wrap:not(.vfl__photo-wrap--empty) .vfl__placeholder { display: none; }
+  .vfl__photo-wrap--empty img { display: none; }
+
+  /* 인덱스 번호 */
+  .vfl__index {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 2;
+    font-size: 0.68rem;
+    font-family: var(--font-en);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    padding: 0.25rem 0.55rem;
+    border-radius: 100px;
+  }
+
+  /* 설명 */
+  .vfl__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .vfl__label {
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .vfl__title {
+    font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+    font-weight: 800;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .vfl__subtitle {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-left: 3px solid var(--color-point);
+    padding-left: 0.75rem;
+  }
+
+  .vfl__desc {
+    font-size: 0.93rem;
+    line-height: 1.9;
+    color: var(--color-text-muted);
+  }
+
+  /* 구분선 */
+  .vfl__item + .vfl__item {
+    padding-top: 5rem;
+    border-top: 1px solid var(--color-border);
+    margin-top: -5rem;
+    padding-top: 5rem;
+  }
+
+  @media (max-width: 900px) {
+    .vfl__item,
+    .vfl__item--reverse {
+      grid-template-columns: 1fr;
+      direction: ltr;
+      gap: 2rem;
+    }
+
+    .vfl__list { gap: 3.5rem; }
+
+    .vfl__item + .vfl__item {
+      padding-top: 3.5rem;
+      margin-top: -3.5rem;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .vfl__list { gap: 2.5rem; }
+
+    .vfl__item + .vfl__item {
+      padding-top: 2.5rem;
+      margin-top: -2.5rem;
+    }
+
+    .vfl__title { font-size: 1.3rem; }
+  }
+</style>

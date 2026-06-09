@@ -1,0 +1,166 @@
+---
+import { vehicleFeatures, vehicleStats } from '../../data/vehicles.js';
+---
+
+<section class="vspecs" aria-label="차량 제원 및 특장점">
+  <div class="container">
+
+    <!-- 핵심 수치 -->
+    <div class="vspecs__stats" data-aos="fade-up">
+      <div class="vspecs__stat">
+        <span class="vspecs__stat-value">약 {vehicleStats.count}대</span>
+        <span class="vspecs__stat-label">직영 냉동탑차</span>
+      </div>
+      <div class="vspecs__divider" aria-hidden="true"></div>
+      <div class="vspecs__stat">
+        <span class="vspecs__stat-value">{vehicleStats.types}</span>
+        <span class="vspecs__stat-label">차종</span>
+      </div>
+      <div class="vspecs__divider" aria-hidden="true"></div>
+      <div class="vspecs__stat">
+        <span class="vspecs__stat-value">{vehicleStats.capacity}</span>
+        <span class="vspecs__stat-label">최대 적재</span>
+      </div>
+      <div class="vspecs__divider" aria-hidden="true"></div>
+      <div class="vspecs__stat">
+        <span class="vspecs__stat-value">{vehicleStats.coverage}</span>
+        <span class="vspecs__stat-label">배송 범위</span>
+      </div>
+    </div>
+
+    <!-- 특장점 -->
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-label">Specifications</span>
+      <h2 class="section-title">차량 특장점</h2>
+    </div>
+
+    <div class="vspecs__grid">
+      {vehicleFeatures.map((f, i) => (
+        <div class="vspecs__item" data-aos="fade-up" data-aos-delay={i * 70}>
+          <div class="vspecs__item-num">0{i + 1}</div>
+          <div class="vspecs__item-body">
+            <strong class="vspecs__item-title">{f.title}</strong>
+            <span class="vspecs__item-detail">{f.detail}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .vspecs {
+    background: #fff;
+    padding-block: var(--section-py);
+  }
+
+  /* 핵심 수치 */
+  .vspecs__stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    background: var(--color-bg-dark);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 3rem;
+    margin-bottom: 5rem;
+  }
+
+  .vspecs__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding-inline: 2.5rem;
+  }
+
+  .vspecs__stat-value {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 900;
+    color: var(--color-point);
+    line-height: 1;
+  }
+
+  .vspecs__stat-label {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.04em;
+  }
+
+  .vspecs__divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.12);
+    flex-shrink: 0;
+  }
+
+  /* 특장점 그리드 */
+  .vspecs__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  .vspecs__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-subtle);
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  }
+
+  .vspecs__item:hover {
+    border-color: var(--color-primary-light);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-3px);
+  }
+
+  .vspecs__item-num {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--color-primary);
+    opacity: 0.18;
+    line-height: 1;
+    font-family: var(--font-en);
+    flex-shrink: 0;
+    min-width: 32px;
+  }
+
+  .vspecs__item-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .vspecs__item-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.4;
+  }
+
+  .vspecs__item-detail {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 900px) {
+    .vspecs__stats { padding: 2rem 1.5rem; }
+    .vspecs__stat { padding-inline: 1.5rem; }
+    .vspecs__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 540px) {
+    .vspecs__stats { flex-direction: column; gap: 1.5rem; }
+    .vspecs__divider { width: 40px; height: 1px; }
+    .vspecs__stat { padding-inline: 0; }
+    .vspecs__grid { grid-template-columns: 1fr; }
+  }
+</style>

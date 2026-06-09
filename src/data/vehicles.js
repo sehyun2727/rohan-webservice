@@ -1,47 +1,47 @@
-export const vehicleStats = {
-  count:    20,
-  types:    '5t · 8t · 11t',
-  capacity: '16파렛트',
-  coverage: '전국',
-};
-
 export const vehicleFeatures = [
   {
-    id: 'tonnage',
-    title: '5~11톤 전 차종 보유',
-    detail: '전 차량 16파렛트 상차 가능',
-  },
-  {
     id: 'temp',
-    title: '냉장 / 냉동 / 상온 겸용',
-    detail: '화물 종류에 따른 유연한 온도 운용',
+    src: '/assets/images/vehicles/vehicle-temp.jpg',
+    alt: '냉동·냉장·상온 겸용 운용',
+    label: 'Temperature Control',
+    title: '냉동·냉장·상온 겸용',
+    subtitle: '화물에 맞는 온도 운용',
+    desc: '냉동(-18℃ 이하)·냉장(0~5℃)·상온 모드를 하나의 차량에서 전환해 운용합니다. 품목이 섞인 혼재 화물도 최적 온도로 보관하면서 운송할 수 있어 다양한 고객사 니즈에 유연하게 대응합니다.',
   },
   {
     id: 'dual-cooler',
+    src: '/assets/images/vehicles/vehicle-cooler.jpg',
+    alt: '냉동기 2대 탑재 차량',
+    label: 'Dual Cooling Unit',
     title: '차량당 냉동기 2대',
-    detail: '한 대 고장 시에도 냉기 유지',
+    subtitle: '한 대 고장 시에도 냉기 유지',
+    desc: '냉동기를 차량 한 대에 2대씩 장착해 이중 안전망을 구성했습니다. 주행 중 냉동기 이상이 발생해도 보조 냉동기가 즉시 가동되어 온도 유지를 보장합니다. 식품·의약품 등 엄격한 콜드체인이 필요한 화물에 특히 적합합니다.',
   },
   {
     id: 'heater',
+    src: '/assets/images/vehicles/vehicle-heater.jpg',
+    alt: '혹한기 히터 장착 냉동탑차',
+    label: 'Winter Safety',
     title: '혹한기 히터 장착',
-    detail: '동절기 화물 안전 보장',
-  },
-  {
-    id: 'stainless',
-    title: '실내 스테인리스 마감',
-    detail: '위생 인증 수준의 내부 관리',
+    subtitle: '동절기 화물 완전 보호',
+    desc: '혹독한 한파에도 차내 온도를 안정적으로 유지하도록 전용 히터를 탑재했습니다. 영하권 외기 온도에서도 냉장·상온 화물의 동파·손상 없이 안전하게 배송지까지 운송합니다.',
   },
   {
     id: 'door',
+    src: '/assets/images/vehicles/vehicle-door.jpg',
+    alt: '롤업도어 조르다 장착 냉동탑차',
+    label: 'Easy Loading',
     title: '롤업도어 · 조르다',
-    detail: '상하차 편의성 극대화',
+    subtitle: '상하차 편의성 극대화',
+    desc: '롤업도어와 조르다(측면 개폐 장치)를 함께 장착해 좁은 현장에서도 신속하게 상하차할 수 있습니다. 문 개방 시 냉기 손실을 최소화하고 작업 동선을 단축해 배송 효율과 화물 품질을 동시에 높입니다.',
+  },
+  {
+    id: 'stainless',
+    src: '/assets/images/vehicles/vehicle-stainless.jpg',
+    alt: '스테인리스 내부 마감 탑차',
+    label: 'Hygienic Interior',
+    title: '실내 스테인리스 마감',
+    subtitle: '위생 인증 수준의 내부 관리',
+    desc: '탑차 내부 전체를 스테인리스 소재로 마감해 세균 번식을 억제하고 청소·소독을 용이하게 합니다. 식품 위생 기준에 부합하는 내부 환경을 유지해 신선식품·가공식품 모두 안심하고 맡기실 수 있습니다.',
   },
 ];
-
-// 사진은 추후 교체 — 지금은 플레이스홀더
-export const vehicleGallery = Array.from({ length: 8 }, (_, i) => ({
-  id:      i + 1,
-  src:     `/assets/images/vehicles/vehicle-${i + 1}.jpg`,
-  alt:     `로한물류 냉동탑차 ${i + 1}`,
-  caption: '사진 교체 예정',
-}));

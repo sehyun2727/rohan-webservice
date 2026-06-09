@@ -1,12 +1,70 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import VehicleFeatureList from '../components/vehicles/VehicleFeatureList.astro';
 ---
-<BaseLayout title="차량소개">
-  <section class="page-stub">
-    <div class="container">
-      <span class="page-stub__label">Our Fleet</span>
-      <h1>차량소개</h1>
-      <p>Phase 6에서 구현 예정 — 차량 경쟁력 하이라이트, 사진 갤러리(카드형)</p>
+
+<BaseLayout
+  title="차량소개"
+  description="(주)로한물류 차량소개 — 직영 냉동탑차 약 20대, 5t~11t 전 차종, 냉동·냉장·상온 운용"
+>
+  <!-- 페이지 히어로 -->
+  <div class="page-hero">
+    <div class="container page-hero__inner">
+      <p class="page-hero__label en">Our Fleet</p>
+      <h1 class="page-hero__title">차량소개</h1>
+      <p class="page-hero__sub">
+        직영 냉동탑차 약 20대를 직접 소유·관리합니다.<br />
+        5t부터 11t까지 전 차종으로 어떤 화물도 대응합니다.
+      </p>
     </div>
-  </section>
+  </div>
+
+  <VehicleFeatureList />
 </BaseLayout>
+
+<style>
+  .page-hero {
+    background:
+      radial-gradient(ellipse 55% 70% at 85% 50%, rgba(14, 80, 165, 0.22) 0%, transparent 65%),
+      linear-gradient(160deg, rgba(4,12,34,0.98) 0%, rgba(10,32,72,0.96) 100%);
+    padding-block: 5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 72px 72px;
+    pointer-events: none;
+  }
+
+  .page-hero__inner { position: relative; z-index: 1; }
+
+  .page-hero__label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+  }
+</style>

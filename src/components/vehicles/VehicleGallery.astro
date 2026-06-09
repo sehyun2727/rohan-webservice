@@ -1,0 +1,146 @@
+---
+import { vehicleGallery } from '../../data/vehicles.js';
+---
+
+<section class="vgallery" aria-label="차량 사진 갤러리">
+  <div class="container">
+    <div class="section-header" data-aos="fade-up">
+      <span class="section-label">Fleet Gallery</span>
+      <h2 class="section-title">차량 사진</h2>
+      <p class="section-desc">
+        직영 냉동탑차 약 20대의 실제 모습입니다.<br />
+        사진은 순차적으로 업데이트됩니다.
+      </p>
+    </div>
+
+    <div class="vgallery__grid">
+      {vehicleGallery.map((v, i) => (
+        <figure class="vgallery__card" data-aos="fade-up" data-aos-delay={((i % 3) * 80)}>
+          <div class="vgallery__img-wrap">
+            <img
+              src={v.src}
+              alt={v.alt}
+              loading="lazy"
+              onerror="this.closest('.vgallery__img-wrap').classList.add('vgallery__img-wrap--empty')"
+            />
+            <div class="vgallery__placeholder" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <rect x="4" y="10" width="40" height="28" rx="3"/>
+                <path d="M4 32l10-10 8 8 6-6 10 8"/>
+                <circle cx="16" cy="20" r="3"/>
+              </svg>
+              <span>추후 사진 삽입 예정</span>
+            </div>
+          </div>
+          <figcaption class="vgallery__caption">{v.caption}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vgallery {
+    background: var(--color-bg-subtle);
+    padding-block: var(--section-py);
+  }
+
+  .vgallery__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* 첫 번째 카드 크게 */
+  .vgallery__card:first-child {
+    grid-column: span 2;
+  }
+
+  .vgallery__card {
+    margin: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+
+  .vgallery__card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .vgallery__img-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--color-bg-subtle);
+  }
+
+  .vgallery__img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .vgallery__card:hover .vgallery__img-wrap img {
+    transform: scale(1.04);
+  }
+
+  /* 이미지 로드 실패 시 플레이스홀더 표시 */
+  .vgallery__img-wrap img { position: relative; z-index: 1; }
+
+  .vgallery__placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    border: 2px dashed var(--color-border);
+    border-radius: inherit;
+  }
+
+  .vgallery__placeholder svg {
+    width: 40px;
+    height: 40px;
+    opacity: 0.4;
+  }
+
+  .vgallery__placeholder span {
+    font-size: 0.78rem;
+    opacity: 0.6;
+    letter-spacing: 0.03em;
+  }
+
+  /* 이미지 있으면 플레이스홀더 숨김 */
+  .vgallery__img-wrap:not(.vgallery__img-wrap--empty) .vgallery__placeholder {
+    display: none;
+  }
+
+  /* 이미지 오류면 img 숨김 */
+  .vgallery__img-wrap--empty img { display: none; }
+
+  .vgallery__caption {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (max-width: 900px) {
+    .vgallery__grid { grid-template-columns: repeat(2, 1fr); }
+    .vgallery__card:first-child { grid-column: span 2; }
+  }
+
+  @media (max-width: 540px) {
+    .vgallery__grid { grid-template-columns: 1fr; }
+    .vgallery__card:first-child { grid-column: span 1; }
+  }
+</style>
