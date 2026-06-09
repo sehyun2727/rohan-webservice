@@ -1,12 +1,806 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const TEL = '010-3330-4488';
 ---
-<BaseLayout title="견적문의">
-  <section class="page-stub">
+
+<BaseLayout
+  title="견적문의"
+  description="(주)로한물류 견적문의 — 화물정보를 입력하시면 맞춤 견적을 받아보실 수 있습니다."
+>
+  <!-- 히어로 -->
+  <div class="page-hero">
+    <div class="container page-hero__inner">
+      <p class="page-hero__label en">Get a Quote</p>
+      <h1 class="page-hero__title">견적문의</h1>
+      <p class="page-hero__sub">
+        화물정보를 입력하시면 맞춤 견적을 받아보실 수 있습니다.<br />
+        전화로 연락 주시면 더욱 빠른 견적 상담이 가능합니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- 전화 문의 팝업 -->
+  <div id="callPopup" class="call-popup" role="dialog" aria-modal="true" aria-label="전화 문의" hidden>
+    <div class="call-popup__backdrop"></div>
+    <div class="call-popup__box">
+      <button class="call-popup__close" id="callPopupClose" aria-label="닫기">
+        <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        </svg>
+      </button>
+      <div class="call-popup__icon">
+        <svg viewBox="0 0 40 40" fill="currentColor" width="32" height="32" aria-hidden="true">
+          <path d="M4 6a2 2 0 012-2h4.306a2 2 0 011.972 1.671l1.48 8.87a2 2 0 01-1.08 2.12l-3.096 1.548a22.074 22.074 0 0012.21 12.21l1.548-3.095a2 2 0 012.12-1.08l8.87 1.48A2 2 0 0136 29.694V34a2 2 0 01-2 2h-4C16.418 36 4 23.582 4 10V6z"/>
+        </svg>
+      </div>
+      <p class="call-popup__label">운영팀 직통</p>
+      <p class="call-popup__number">{TEL}</p>
+      <p class="call-popup__hours">평일 08:00 – 18:00</p>
+    </div>
+  </div>
+
+  <!-- 폼 섹션 -->
+  <section class="quote-section">
     <div class="container">
-      <span class="page-stub__label">Get a Quote</span>
-      <h1>견적문의</h1>
-      <p>Phase 7에서 구현 예정 — 견적 폼 (필수·선택 항목, 개인정보 수집·이용 동의 필수), TXT 파일 다운로드</p>
+      <div class="quote-layout">
+
+        <!-- 사이드 정보 -->
+        <aside class="quote-side" data-aos="fade-right">
+          <div class="quote-side__card">
+            <p class="quote-side__eyebrow">빠른 상담</p>
+            <p class="quote-side__tel">{TEL}</p>
+            <p class="quote-side__hours">평일 08:00 – 18:00</p>
+          </div>
+
+          <div class="quote-side__steps">
+            <p class="quote-side__steps-title">견적 절차</p>
+            <ol class="quote-side__step-list">
+              <li>
+                <span class="step-num">01</span>
+                <span>양식 작성 후<br />TXT 다운로드</span>
+              </li>
+              <li>
+                <span class="step-num">02</span>
+                <span>전화·이메일로<br />파일 전달</span>
+              </li>
+              <li>
+                <span class="step-num">03</span>
+                <span>맞춤 견적<br />안내 (당일~1일)</span>
+              </li>
+            </ol>
+          </div>
+        </aside>
+
+        <!-- 폼 -->
+        <div class="quote-form-wrap" data-aos="fade-up" data-aos-delay="60">
+
+          <div class="quote-notice">
+            <svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14" aria-hidden="true">
+              <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 3a.75.75 0 110 1.5A.75.75 0 018 4zm-.25 2.75a.75.75 0 011.5 0v3.5a.75.75 0 01-1.5 0v-3.5z"/>
+            </svg>
+            <span>양식 작성 후 <strong>TXT 다운로드</strong>를 눌러 저장하신 뒤, 전화 또는 이메일로 보내주세요.</span>
+          </div>
+
+          <form id="quoteForm" novalidate>
+
+            <!-- 01 기본 정보 -->
+            <div class="qblock">
+              <div class="qblock__head">
+                <span class="qblock__num">01</span>
+                <span class="qblock__title">기본 정보</span>
+              </div>
+              <div class="qblock__body">
+                <div class="qrow qrow--2">
+                  <div class="qfield">
+                    <label for="company">업체명 <em>*</em></label>
+                    <input type="text" id="company" name="company" placeholder="(주)로한물류" required />
+                  </div>
+                  <div class="qfield">
+                    <label for="contactName">담당자명 <em>*</em></label>
+                    <input type="text" id="contactName" name="contactName" placeholder="홍길동" required />
+                  </div>
+                </div>
+                <div class="qrow qrow--2">
+                  <div class="qfield">
+                    <label for="phone">연락처 <em>*</em></label>
+                    <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required />
+                  </div>
+                  <div class="qfield">
+                    <label for="email">이메일 <span class="opt">선택</span></label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 02 화물 정보 -->
+            <div class="qblock">
+              <div class="qblock__head">
+                <span class="qblock__num">02</span>
+                <span class="qblock__title">화물 정보</span>
+              </div>
+              <div class="qblock__body">
+                <div class="qrow qrow--2">
+                  <div class="qfield">
+                    <label for="cargoType">화물 종류 <em>*</em></label>
+                    <input type="text" id="cargoType" name="cargoType" placeholder="예) 냉동 수산물, 유제품" required />
+                  </div>
+                  <div class="qfield">
+                    <label for="tempType">운송 온도 <em>*</em></label>
+                    <select id="tempType" name="tempType" required>
+                      <option value="" disabled selected>선택하세요</option>
+                      <option value="냉동">냉동 (-18℃ 이하)</option>
+                      <option value="냉장">냉장 (0~5℃)</option>
+                      <option value="상온">상온</option>
+                      <option value="혼재">혼재 (냉동+냉장 등)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="qrow qrow--2">
+                  <div class="qfield">
+                    <label for="cargoWeight">중량·수량 <span class="opt">선택</span></label>
+                    <input type="text" id="cargoWeight" name="cargoWeight" placeholder="예) 5톤, 16파렛트" />
+                  </div>
+                  <div class="qfield">
+                    <label for="frequency">운송 빈도 <span class="opt">선택</span></label>
+                    <select id="frequency" name="frequency">
+                      <option value="" disabled selected>선택하세요</option>
+                      <option value="정기 (주 1회 이상)">정기 (주 1회 이상)</option>
+                      <option value="비정기">비정기</option>
+                      <option value="1회성">1회성</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 03 운송 구간 -->
+            <div class="qblock">
+              <div class="qblock__head">
+                <span class="qblock__num">03</span>
+                <span class="qblock__title">운송 구간</span>
+              </div>
+              <div class="qblock__body">
+                <div class="qrow qrow--3">
+                  <div class="qfield">
+                    <label for="origin">출발지 <em>*</em></label>
+                    <input type="text" id="origin" name="origin" placeholder="예) 경기 안성시" required />
+                  </div>
+                  <div class="qfield">
+                    <label for="destination">도착지 <em>*</em></label>
+                    <input type="text" id="destination" name="destination" placeholder="예) 부산 해운대구" required />
+                  </div>
+                  <div class="qfield">
+                    <label for="desiredDate">희망 일자 <em>*</em></label>
+                    <input type="date" id="desiredDate" name="desiredDate" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 04 기타 -->
+            <div class="qblock">
+              <div class="qblock__head">
+                <span class="qblock__num">04</span>
+                <span class="qblock__title">기타 요청사항 <span class="opt">선택</span></span>
+              </div>
+              <div class="qblock__body">
+                <div class="qfield">
+                  <textarea id="notes" name="notes" rows="4" placeholder="특이사항, 추가 요청 등을 자유롭게 입력해 주세요."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- 개인정보 동의 -->
+            <div class="privacy-box">
+              <label class="privacy-box__label">
+                <input type="checkbox" id="privacyAgree" name="privacyAgree" required />
+                <span class="privacy-box__text">
+                  <strong>개인정보 수집·이용에 동의합니다.</strong> (필수)<br />
+                  <small>수집항목: 업체명, 담당자명, 연락처, 이메일 &nbsp;·&nbsp; 목적: 견적 안내 &nbsp;·&nbsp; 보유기간: 견적 완료 후 즉시 파기</small>
+                </span>
+              </label>
+              <p id="privacyError" class="privacy-box__error" hidden>개인정보 수집·이용에 동의해 주세요.</p>
+            </div>
+
+            <!-- 버튼 -->
+            <div class="quote-actions">
+              <button type="submit" class="btn btn--primary quote-actions__dl">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+                견적서 TXT 다운로드
+              </button>
+              <button type="button" id="callPopupBtn" class="quote-actions__call">
+                <svg viewBox="0 0 20 20" fill="currentColor" width="15" height="15" aria-hidden="true">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+                </svg>
+                전화 문의
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // 전화 팝업
+  const popup     = document.getElementById('callPopup') as HTMLElement;
+  const popupBtn  = document.getElementById('callPopupBtn') as HTMLButtonElement;
+  const popupClose = document.getElementById('callPopupClose') as HTMLButtonElement;
+  const backdrop  = popup.querySelector('.call-popup__backdrop') as HTMLElement;
+
+  const openPopup  = () => { popup.hidden = false; document.body.style.overflow = 'hidden'; };
+  const closePopup = () => { popup.hidden = true;  document.body.style.overflow = ''; };
+
+  popupBtn.addEventListener('click', openPopup);
+  popupClose.addEventListener('click', closePopup);
+  backdrop.addEventListener('click', closePopup);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePopup(); });
+
+  // 폼
+  const form = document.getElementById('quoteForm') as HTMLFormElement;
+  const privacyCheck = document.getElementById('privacyAgree') as HTMLInputElement;
+  const privacyError = document.getElementById('privacyError') as HTMLElement;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (!privacyCheck.checked) {
+      privacyError.hidden = false;
+      privacyCheck.focus();
+      return;
+    }
+    privacyError.hidden = true;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const d = new FormData(form);
+    const get = (k: string) => (d.get(k) as string)?.trim() || '-';
+    const now = new Date().toLocaleString('ko-KR');
+
+    const txt = [
+      '══════════════════════════════════════',
+      '   (주)로한물류  견적 문의서',
+      `   작성일시: ${now}`,
+      '══════════════════════════════════════',
+      '',
+      '【 기본 정보 】',
+      `  업체명     : ${get('company')}`,
+      `  담당자명   : ${get('contactName')}`,
+      `  연락처     : ${get('phone')}`,
+      `  이메일     : ${get('email')}`,
+      '',
+      '【 화물 정보 】',
+      `  화물 종류  : ${get('cargoType')}`,
+      `  운송 온도  : ${get('tempType')}`,
+      `  중량·수량  : ${get('cargoWeight')}`,
+      `  운송 빈도  : ${get('frequency')}`,
+      '',
+      '【 운송 구간 】',
+      `  출발지     : ${get('origin')}`,
+      `  도착지     : ${get('destination')}`,
+      `  희망 일자  : ${get('desiredDate')}`,
+      '',
+      '【 기타 요청사항 】',
+      `  ${get('notes').replace(/\n/g, '\n  ')}`,
+      '',
+      '══════════════════════════════════════',
+      '  개인정보 수집·이용 동의: 완료',
+      '══════════════════════════════════════',
+    ].join('\n');
+
+    const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `로한물류_견적문의_${get('company')}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  privacyCheck.addEventListener('change', () => {
+    if (privacyCheck.checked) privacyError.hidden = true;
+  });
+</script>
+
+<style>
+  /* ── 히어로 ── */
+  .page-hero {
+    background:
+      radial-gradient(ellipse 55% 70% at 85% 50%, rgba(14, 80, 165, 0.22) 0%, transparent 65%),
+      linear-gradient(160deg, rgba(4,12,34,0.98) 0%, rgba(10,32,72,0.96) 100%);
+    height: 280px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 72px 72px;
+    pointer-events: none;
+  }
+
+  .page-hero__inner { position: relative; z-index: 1; width: 100%; }
+
+  .page-hero__label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-hero__sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.75;
+    margin-bottom: 1.75rem;
+  }
+
+  .page-hero__tel {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 0.6rem 1.4rem;
+    border-radius: 100px;
+    letter-spacing: 0.06em;
+    transition: background var(--transition);
+  }
+
+
+  /* ── 폼 섹션 ── */
+  .quote-section {
+    background: var(--color-bg-subtle);
+    padding-block: var(--section-py);
+  }
+
+  .quote-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  /* ── 사이드바 ── */
+  .quote-side { position: sticky; top: 5rem; }
+
+  .quote-side__card {
+    background: var(--color-bg-dark);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem 1.5rem;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .quote-side__eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .quote-side__tel {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+
+  .quote-side__hours {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .quote-side__steps {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+
+  .quote-side__steps-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 1.1rem;
+  }
+
+  .quote-side__step-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .quote-side__step-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 800;
+    font-family: var(--font-en);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  /* ── 폼 영역 ── */
+  .quote-notice {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(14, 165, 233, 0.07);
+    border: 1px solid rgba(14, 165, 233, 0.18);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.1rem;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-notice svg { flex-shrink: 0; color: var(--color-accent); }
+  .quote-notice strong { color: var(--color-text); }
+
+  form { display: flex; flex-direction: column; gap: 1rem; }
+
+  /* 블록 */
+  .qblock {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .qblock__head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-bg-subtle);
+  }
+
+  .qblock__num {
+    font-size: 0.65rem;
+    font-weight: 800;
+    font-family: var(--font-en);
+    color: #fff;
+    background: var(--color-primary);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .qblock__title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .qblock__body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  /* 행 */
+  .qrow { display: grid; gap: 0.85rem; }
+  .qrow--2 { grid-template-columns: 1fr 1fr; }
+  .qrow--3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* 필드 */
+  .qfield { display: flex; flex-direction: column; gap: 0.35rem; }
+
+  .qfield label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .qfield label em {
+    font-style: normal;
+    color: var(--color-point);
+    font-size: 0.85rem;
+  }
+
+  .opt {
+    font-size: 0.62rem;
+    font-weight: 500;
+    font-style: normal;
+    color: var(--color-text-muted);
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    padding: 0.1rem 0.4rem;
+    border-radius: 100px;
+  }
+
+  .qfield input,
+  .qfield select,
+  .qfield textarea {
+    width: 100%;
+    padding: 0.62rem 0.9rem;
+    font-size: 0.86rem;
+    color: var(--color-text);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    appearance: none;
+  }
+
+  .qfield select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%239ca3af' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 12px;
+    padding-right: 2.2rem;
+    cursor: pointer;
+  }
+
+  .qfield input:focus,
+  .qfield select:focus,
+  .qfield textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(14, 80, 165, 0.1);
+  }
+
+  .qfield textarea { resize: vertical; min-height: 96px; }
+
+  /* 개인정보 동의 */
+  .privacy-box {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.25rem;
+  }
+
+  .privacy-box__label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    cursor: pointer;
+  }
+
+  .privacy-box__label input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+  }
+
+  .privacy-box__text {
+    font-size: 0.83rem;
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  .privacy-box__text small {
+    display: block;
+    font-size: 0.73rem;
+    color: var(--color-text-muted);
+    margin-top: 0.15rem;
+  }
+
+  .privacy-box__error {
+    font-size: 0.75rem;
+    color: #ef4444;
+    margin-top: 0.5rem;
+    padding-left: calc(17px + 0.7rem);
+  }
+
+  /* 버튼 */
+  .quote-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding-top: 0.25rem;
+  }
+
+  .quote-actions__dl {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .quote-actions__call {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.7rem 1.4rem;
+    border: 1.5px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--color-text);
+    background: #fff;
+    text-decoration: none;
+    transition: border-color var(--transition), color var(--transition), background var(--transition);
+    white-space: nowrap;
+  }
+
+  .quote-actions__call:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  /* ── 전화 팝업 ── */
+  .call-popup[hidden] { display: none; }
+
+  .call-popup {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .call-popup__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 12, 34, 0.6);
+    backdrop-filter: blur(3px);
+  }
+
+  .call-popup__box {
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 2rem 2rem;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: popupIn 0.22s ease;
+  }
+
+  @keyframes popupIn {
+    from { opacity: 0; transform: scale(0.94) translateY(8px); }
+    to   { opacity: 1; transform: scale(1)    translateY(0); }
+  }
+
+  .call-popup__close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-muted);
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: color var(--transition);
+  }
+
+  .call-popup__close:hover { color: var(--color-text); }
+
+  .call-popup__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(14, 80, 165, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+
+  .call-popup__label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .call-popup__number {
+    font-size: 1.7rem;
+    font-weight: 900;
+    color: var(--color-text);
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+
+  .call-popup__hours {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ── 반응형 ── */
+  @media (max-width: 900px) {
+    .quote-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .quote-side {
+      position: static;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .quote-side__card { margin-bottom: 0; }
+  }
+
+  @media (max-width: 640px) {
+    .quote-side { grid-template-columns: 1fr; }
+    .qrow--2 { grid-template-columns: 1fr; }
+    .qrow--3 { grid-template-columns: 1fr 1fr; }
+    .quote-actions { flex-direction: column; }
+  }
+
+  @media (max-width: 400px) {
+    .qrow--3 { grid-template-columns: 1fr; }
+  }
+</style>

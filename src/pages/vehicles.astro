@@ -27,7 +27,9 @@ import VehicleFeatureList from '../components/vehicles/VehicleFeatureList.astro'
     background:
       radial-gradient(ellipse 55% 70% at 85% 50%, rgba(14, 80, 165, 0.22) 0%, transparent 65%),
       linear-gradient(160deg, rgba(4,12,34,0.98) 0%, rgba(10,32,72,0.96) 100%);
-    padding-block: 5rem 4rem;
+    height: 280px;
+    display: flex;
+    align-items: center;
     position: relative;
     overflow: hidden;
   }
@@ -43,7 +45,7 @@ import VehicleFeatureList from '../components/vehicles/VehicleFeatureList.astro'
     pointer-events: none;
   }
 
-  .page-hero__inner { position: relative; z-index: 1; }
+  .page-hero__inner { position: relative; z-index: 1; width: 100%; }
 
   .page-hero__label {
     display: block;

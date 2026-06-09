@@ -17,11 +17,6 @@ import { warehouses } from '../data/warehouses.js';
         수도권 안성, 영남 진주 두 거점에서<br />
         냉동·냉장 전 온도대 보관 서비스를 제공합니다.
       </p>
-      <div class="page-hero__nav">
-        <a href="#anseong">안성 거점센터</a>
-        <span aria-hidden="true">·</span>
-        <a href="#jinju">진주센터</a>
-      </div>
     </div>
   </div>
 
@@ -42,7 +37,9 @@ import { warehouses } from '../data/warehouses.js';
     background:
       radial-gradient(ellipse 55% 70% at 85% 50%, rgba(14, 80, 165, 0.22) 0%, transparent 65%),
       linear-gradient(160deg, rgba(4,12,34,0.98) 0%, rgba(10,32,72,0.96) 100%);
-    padding-block: 5rem 4rem;
+    height: 280px;
+    display: flex;
+    align-items: center;
     position: relative;
     overflow: hidden;
   }
@@ -58,7 +55,7 @@ import { warehouses } from '../data/warehouses.js';
     pointer-events: none;
   }
 
-  .page-hero__inner { position: relative; z-index: 1; }
+  .page-hero__inner { position: relative; z-index: 1; width: 100%; }
 
   .page-hero__label {
     display: block;
