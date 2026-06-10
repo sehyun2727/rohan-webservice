@@ -40,26 +40,6 @@ export const warehouses = [
     ],
   },
   {
-    id:        'haman',
-    name:      '함안 DEPOT',
-    region:    '영남권 (홈플러스 물류센터 임대)',
-    address:   '경상남도 함안군 칠서면 대치리 280-4',
-    area:      '냉장 80평·냉동 80평(보관 10평)',
-    capacity:  '입고 09:00~24:00',
-    tempRange: '냉동·냉장',
-    images: [
-      '/assets/images/warehouses/haman-1.jpg',
-      '/assets/images/warehouses/haman-2.jpg',
-      '/assets/images/warehouses/haman-3.jpg',
-    ],
-    features: [
-      '보관·납품대행·Cross Docking',
-      '자유로운 입고시간 (09:00~24:00)',
-      '전문 직원 매입 처리',
-      '회송품 즉시 냉장·냉동 보관',
-    ],
-  },
-  {
     id:        'jinju',
     name:      '진주 DEPOT',
     region:    '영남권 거점 (자가 100평)',

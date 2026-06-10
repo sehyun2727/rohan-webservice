@@ -17,13 +17,7 @@ export const markers = [
     address: '경상북도 칠곡군 지천면 금호리 481-16',
     coords:  [35.9938, 128.4520],
   },
-  {
-    id:      'haman-wh',
-    type:    'warehouse',
-    label:   '함안센터',
-    address: '경상남도 함안군 칠서면 대치리 280-4',
-    coords:  [35.2732, 128.4066],
-  },
+
   {
     id:      'anseong-wh',
     type:    'warehouse',
