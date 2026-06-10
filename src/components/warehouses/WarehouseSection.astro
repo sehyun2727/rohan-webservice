@@ -5,8 +5,8 @@ interface Props {
     name: string;
     region: string;
     address: string;
-    area: number | null;
-    capacity: number | null;
+    area: string | null;
+    capacity: string | null;
     tempRange: string | null;
     images: string[];
     features: string[];
@@ -17,8 +17,8 @@ interface Props {
 const { warehouse: w, reverse = false } = Astro.props;
 
 const specs = [
-  { label: '면적', value: w.area ? `${w.area.toLocaleString()} m²` : null },
-  { label: '보관용량', value: w.capacity ? `${w.capacity.toLocaleString()} 파렛트` : null },
+  { label: '보관 규모', value: w.area ?? null },
+  { label: '접안 / 운영', value: w.capacity ?? null },
   { label: '온도대', value: w.tempRange ?? null },
 ];
 ---
