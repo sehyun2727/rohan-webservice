@@ -28,8 +28,9 @@ import { company } from '../../data/company.js';
         </p>
         <p>
           앞으로도 고객 여러분의 믿음에 보답할 수 있도록 최고의 서비스와 책임 있는 경영으로
-          신뢰받는 물류 파트너가 되겠습니다. 감사합니다.
+          신뢰받는 물류 파트너가 되겠습니다.
         </p>
+        <p class="greeting__thanks">감사합니다.</p>
       </div>
       <p class="greeting__sign">
         (주)로한물류 대표이사 <strong>{company.ceo}</strong>
@@ -57,7 +58,7 @@ import { company } from '../../data/company.js';
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 5rem;
-    align-items: start;
+    align-items: center;
   }
 
   .greeting__body {
@@ -79,6 +80,12 @@ import { company } from '../../data/company.js';
     color: var(--color-primary);
   }
 
+  .greeting__thanks {
+    font-weight: 700;
+    color: var(--color-text) !important;
+    margin-top: 0.25rem;
+  }
+
   .greeting__sign {
     font-size: 0.95rem;
     color: var(--color-text-muted);
@@ -92,13 +99,13 @@ import { company } from '../../data/company.js';
   }
 
   .greeting__photo {
-    width: 260px;
+    width: 280px;
     flex-shrink: 0;
   }
 
   .greeting__photo-placeholder {
-    width: 260px;
-    height: 320px;
+    width: 280px;
+    height: 360px;
     background: var(--color-bg-subtle);
     border: 2px dashed var(--color-border);
     border-radius: 8px;
