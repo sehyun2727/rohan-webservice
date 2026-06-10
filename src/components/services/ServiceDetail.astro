@@ -35,12 +35,20 @@ const icons: Record<string, string> = {
     <circle cx="40" cy="44" r="4"/>
     <path d="M36 44h-8M44 44h8"/>
   </svg>`,
+  consulting: `<svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="6" y="14" width="68" height="48" rx="4"/>
+    <path d="M20 52l12-16 10 10 10-14 12 20"/>
+    <line x1="6" y1="68" x2="74" y2="68"/>
+    <circle cx="64" cy="26" r="6"/>
+    <path d="M61 26h6M64 23v6"/>
+  </svg>`,
 };
 
 const accentColors: Record<string, string> = {
-  coldchain: 'var(--color-accent)',
-  '3pl':     'var(--color-point)',
-  storage:   'var(--color-primary-light)',
+  coldchain:  'var(--color-accent)',
+  '3pl':      'var(--color-point)',
+  storage:    'var(--color-primary-light)',
+  consulting: '#6366f1',
 };
 ---
 
@@ -61,7 +69,6 @@ const accentColors: Record<string, string> = {
         <li data-aos="fade-up" data-aos-delay={150 + i * 60}>{f}</li>
       ))}
     </ul>
-    <a href="/quote" class="btn btn--primary svc-detail__cta">이 서비스 견적 문의</a>
   </div>
 </div>
 
@@ -197,7 +204,6 @@ const accentColors: Record<string, string> = {
     flex-shrink: 0;
   }
 
-  .svc-detail__cta { margin-top: 0.75rem; align-self: flex-start; }
 
   @media (max-width: 900px) {
     .svc-detail,
@@ -211,6 +217,5 @@ const accentColors: Record<string, string> = {
     .svc-detail__visual { padding: 3rem 2rem; min-height: 200px; }
     .svc-detail__icon { width: 72px; height: 72px; }
     .svc-detail__content { padding: 2.5rem 2rem; }
-    .svc-detail__cta { width: 100%; }
   }
 </style>
