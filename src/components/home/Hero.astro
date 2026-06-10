@@ -71,7 +71,7 @@ const credentials = [
 <style>
   .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: calc(100vh - var(--header-height));
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -126,8 +126,7 @@ const credentials = [
   .hero__content {
     position: relative;
     z-index: 1;
-    padding-top: calc(var(--header-height) + 3rem);
-    padding-bottom: 5rem;
+    padding-block: 5rem;
     max-width: 700px;
     margin-inline: auto;
     text-align: center;
