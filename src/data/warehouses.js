@@ -1,7 +1,7 @@
 export const warehouses = [
   {
     id:        'anseong',
-    name:      '안성 센터',
+    name:      '로한물류 안성 거점센터',
     region:    '수도권 거점',
     address:   '경기도 안성시 원곡면 반제리 181-1',
     area:      '냉장 330평·냉동 140평·상온 100평',
@@ -21,7 +21,7 @@ export const warehouses = [
   },
   {
     id:        'chilgok',
-    name:      '칠곡 센터',
+    name:      '로한물류 칠곡 환적센터',
     region:    '영남권 거점',
     address:   '경상북도 칠곡군 지천면 금호리 481-16',
     area:      '냉장 250평·냉동 40평·상온 100평',
@@ -41,9 +41,9 @@ export const warehouses = [
   },
   {
     id:        'jinju',
-    name:      '진주 DEPOT',
-    region:    '영남권 거점 (자가 100평)',
-    address:   '경남 진주시 (진성IC 인접)',
+    name:      '로한물류 진주 DEPOT',
+    region:    '경남권 거점',
+    address:   '경상남도 진주시 진성면 동부로 1233',
     area:      '냉장 20Pallet·냉동 6Pallet',
     capacity:  '동시 접안 11톤(16P) 6대',
     tempRange: '냉동·냉장',
@@ -53,10 +53,10 @@ export const warehouses = [
       '/assets/images/warehouses/jinju-3.jpg',
     ],
     features: [
-      '입고·보관·납품대행(홈플러스)',
+      '입고·보관·납품대행',
       '진성IC 5분',
-      '영남권 연계수송 거점',
-      'BHC 영남권 물류대행 경험',
+      '경남권 연계수송 거점',
+      'BHC 경남권 물류대행 경험',
     ],
   },
 ];
