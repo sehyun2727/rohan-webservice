@@ -22,12 +22,15 @@ import { company } from '../../data/company.js';
 
     <address class="footer__info">
       <strong>{company.name}</strong>&nbsp; 대표: {company.ceo}<br />
-      {company.address}<br />
+      {company.address} {company.addressDetail}<br />
       대표전화&nbsp;
       <a href={`tel:${company.tel.replace(/-/g, '')}`}>{company.tel}</a>
-      &nbsp;|&nbsp; 운영팀장&nbsp;
+      &nbsp;·&nbsp; 팩스 {company.fax}
+      &nbsp;·&nbsp; 운영팀장&nbsp;
       <a href={`tel:${company.mobile.replace(/-/g, '')}`}>{company.mobile}</a><br />
-      사업자 등록번호: {company.businessNumber}
+      메일&nbsp;
+      <a href={`mailto:${company.email}`}>{company.email}</a>
+      &nbsp;·&nbsp; 사업자등록번호: {company.businessNumber}
     </address>
 
   </div>
