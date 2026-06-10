@@ -139,12 +139,12 @@ const TEL = '010-3330-4488';
                 </div>
                 <div class="qrow qrow--2">
                   <div class="qfield">
-                    <label for="cargoWeight">중량·수량 <span class="opt">선택</span></label>
-                    <input type="text" id="cargoWeight" name="cargoWeight" placeholder="예) 5톤, 16파렛트" />
+                    <label for="cargoWeight">중량·수량 <em>*</em></label>
+                    <input type="text" id="cargoWeight" name="cargoWeight" placeholder="예) 5톤, 16파렛트" required />
                   </div>
                   <div class="qfield">
-                    <label for="frequency">운송 빈도 <span class="opt">선택</span></label>
-                    <select id="frequency" name="frequency">
+                    <label for="frequency">운송 빈도 <em>*</em></label>
+                    <select id="frequency" name="frequency" required>
                       <option value="" disabled selected>선택하세요</option>
                       <option value="정기 (주 1회 이상)">정기 (주 1회 이상)</option>
                       <option value="비정기">비정기</option>
@@ -162,7 +162,7 @@ const TEL = '010-3330-4488';
                 <span class="qblock__title">운송 구간</span>
               </div>
               <div class="qblock__body">
-                <div class="qrow qrow--3">
+                <div class="qrow qrow--2">
                   <div class="qfield">
                     <label for="origin">출발지 <em>*</em></label>
                     <input type="text" id="origin" name="origin" placeholder="예) 경기 안성시" required />
@@ -171,9 +171,30 @@ const TEL = '010-3330-4488';
                     <label for="destination">도착지 <em>*</em></label>
                     <input type="text" id="destination" name="destination" placeholder="예) 부산 해운대구" required />
                   </div>
+                </div>
+                <div class="qrow qrow--3">
                   <div class="qfield">
-                    <label for="desiredDate">희망 일자 <em>*</em></label>
+                    <label for="desiredDate">운송 시작 예정일 <em>*</em></label>
                     <input type="date" id="desiredDate" name="desiredDate" required />
+                  </div>
+                  <div class="qfield">
+                    <label for="loadTime">상차 희망시간 <span class="opt">선택</span></label>
+                    <input type="time" id="loadTime" name="loadTime" />
+                  </div>
+                  <div class="qfield">
+                    <label for="unloadTime">하차 희망시간 <span class="opt">선택</span></label>
+                    <input type="time" id="unloadTime" name="unloadTime" />
+                  </div>
+                </div>
+                <div class="qrow qrow--2">
+                  <div class="qfield">
+                    <label for="loadMethod">상차 방법 <span class="opt">선택</span></label>
+                    <select id="loadMethod" name="loadMethod">
+                      <option value="" disabled selected>선택하세요</option>
+                      <option value="지게차 상차">지게차 상차</option>
+                      <option value="수작업 상차">수작업 상차</option>
+                      <option value="미정">미정</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -198,7 +219,7 @@ const TEL = '010-3330-4488';
                 <input type="checkbox" id="privacyAgree" name="privacyAgree" required />
                 <span class="privacy-box__text">
                   <strong>개인정보 수집·이용에 동의합니다.</strong> (필수)<br />
-                  <small>수집항목: 업체명, 담당자명, 연락처, 이메일 &nbsp;·&nbsp; 목적: 견적 안내 &nbsp;·&nbsp; 보유기간: 견적 완료 후 즉시 파기</small>
+                  <small>수집항목: 업체명, 담당자명, 연락처, 이메일 &nbsp;·&nbsp; 목적: 견적 안내 &nbsp;·&nbsp; 보유기간: 견적 완료 후 즉시 파기 &nbsp;·&nbsp; <a href="/privacy" target="_blank" class="privacy-link">개인정보처리방침 보기</a></small>
                 </span>
               </label>
               <p id="privacyError" class="privacy-box__error" hidden>개인정보 수집·이용에 동의해 주세요.</p>
@@ -273,21 +294,24 @@ const TEL = '010-3330-4488';
       '══════════════════════════════════════',
       '',
       '【 기본 정보 】',
-      `  업체명     : ${get('company')}`,
-      `  담당자명   : ${get('contactName')}`,
-      `  연락처     : ${get('phone')}`,
-      `  이메일     : ${get('email')}`,
+      `  업체명         : ${get('company')}`,
+      `  담당자명       : ${get('contactName')}`,
+      `  연락처         : ${get('phone')}`,
+      `  이메일         : ${get('email')}`,
       '',
       '【 화물 정보 】',
-      `  화물 종류  : ${get('cargoType')}`,
-      `  운송 온도  : ${get('tempType')}`,
-      `  중량·수량  : ${get('cargoWeight')}`,
-      `  운송 빈도  : ${get('frequency')}`,
+      `  화물 종류      : ${get('cargoType')}`,
+      `  운송 온도      : ${get('tempType')}`,
+      `  중량·수량      : ${get('cargoWeight')}`,
+      `  운송 빈도      : ${get('frequency')}`,
       '',
       '【 운송 구간 】',
-      `  출발지     : ${get('origin')}`,
-      `  도착지     : ${get('destination')}`,
-      `  희망 일자  : ${get('desiredDate')}`,
+      `  출발지         : ${get('origin')}`,
+      `  도착지         : ${get('destination')}`,
+      `  운송 시작 예정일 : ${get('desiredDate')}`,
+      `  상차 희망시간  : ${get('loadTime') || '-'}`,
+      `  하차 희망시간  : ${get('unloadTime') || '-'}`,
+      `  상차 방법      : ${get('loadMethod') || '-'}`,
       '',
       '【 기타 요청사항 】',
       `  ${get('notes').replace(/\n/g, '\n  ')}`,
@@ -641,6 +665,12 @@ const TEL = '010-3330-4488';
     font-size: 0.73rem;
     color: var(--color-text-muted);
     margin-top: 0.15rem;
+  }
+
+  .privacy-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .privacy-box__error {
