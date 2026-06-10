@@ -17,10 +17,13 @@ export const shippers = [
 
 /** 납품처 — 로한물류가 배송하는 유통·소매 거점 */
 export const retailers = [
-  { id: 'homeplus', name: '홈플러스',  logo: '/assets/logos/homeplus.png' },
-  { id: 'lotte',    name: '롯데마트',  logo: '/assets/logos/lotte.png' },
-  { id: 'coupang',  name: '쿠팡',      logo: '/assets/logos/coupang.png' },
-  { id: 'welstory', name: '웰스토리',  logo: '/assets/logos/welstory.png' },
-  { id: 'kurly',    name: '마켓컬리',  logo: '/assets/logos/kurly.png' },
+  { id: 'homeplus', name: '홈플러스',      logo: '/assets/logos/homeplus.png' },
+  { id: 'emart',    name: '이마트',        logo: '/assets/logos/emart.png' },
+  { id: 'lotte',    name: '롯데마트',      logo: '/assets/logos/lotte.png' },
+  { id: 'hanaro',   name: '농협하나로마트', logo: '/assets/logos/hanaro.png' },
+  { id: 'gs',       name: 'GS리테일',     logo: '/assets/logos/gs.png' },
+  { id: 'coupang',  name: '쿠팡',          logo: '/assets/logos/coupang.png' },
+  { id: 'welstory', name: '웰스토리',      logo: '/assets/logos/welstory.png' },
+  { id: 'kurly',    name: '마켓컬리',      logo: '/assets/logos/kurly.png' },
   // 여기에 납품처 추가 ↑
 ];

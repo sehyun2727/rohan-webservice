@@ -1,35 +1,52 @@
 ---
-// 연혁 데이터를 여기에 입력하세요 (최신순)
 const history = [
   {
-    year: '2024',
+    year: '2019',
     events: [
-      '[연혁 항목을 입력해 주세요]',
+      '안성 저온센터 신축 (560평)',
     ],
   },
   {
-    year: '2020',
+    year: '2017',
     events: [
-      '[연혁 항목을 입력해 주세요]',
+      '충남오감 영남권·수도권 물류 대행',
     ],
   },
   {
     year: '2015',
     events: [
-      '[연혁 항목을 입력해 주세요]',
-      '[연혁 항목을 입력해 주세요]',
+      'BHC 영남권 물류센터 운영 대행',
     ],
   },
   {
-    year: '2010',
+    year: '2014',
     events: [
-      '[연혁 항목을 입력해 주세요]',
+      '아워홈 센터 간 식자재 간선 수송 시작',
+    ],
+  },
+  {
+    year: '2012',
+    events: [
+      '수도권·영남·호남권 Coldchain Network 구축',
+    ],
+  },
+  {
+    year: '2009',
+    events: [
+      '안성물류센터 오픈',
+    ],
+  },
+  {
+    year: '2008',
+    events: [
+      '함안센터 오픈 (냉장·냉동 물류센터)',
     ],
   },
   {
     year: '2007',
     events: [
-      '(주)로한물류 설립',
+      '(주)로한물류 법인 설립',
+      '홈플러스·이마트·롯데마트 물류센터 입고',
     ],
   },
 ];
@@ -45,7 +62,7 @@ const history = [
     <ol class="history__timeline" reversed>
       {history.map((h, i) => (
         <li class="history__item" data-aos="fade-up" data-aos-delay={i * 60}>
-          <span class={`history__year ${h.year === '2007' ? 'history__year--highlight' : ''}`}>{h.year}</span>
+          <span class={`history__year ${h.year === '2019' ? 'history__year--highlight' : ''}`}>{h.year}</span>
           <ul class="history__events">
             {h.events.map((e) => (
               <li class="history__event">{e}</li>
