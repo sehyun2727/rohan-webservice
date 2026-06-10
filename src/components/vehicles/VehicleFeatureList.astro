@@ -58,14 +58,14 @@ import { vehicleFeatures } from '../../data/vehicles.js';
   .vfl__list {
     display: flex;
     flex-direction: column;
-    gap: 3.5rem;
+    gap: 2.5rem;
     margin-top: 3.5rem;
   }
 
   .vfl__item {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
+    gap: 1.75rem;
     align-items: center;
   }
 
@@ -80,7 +80,7 @@ import { vehicleFeatures } from '../../data/vehicles.js';
   /* 사진 */
   .vfl__photo-wrap {
     position: relative;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 16 / 9;
     border-radius: var(--radius-lg);
     overflow: hidden;
     background: var(--color-bg-subtle);
@@ -201,20 +201,20 @@ import { vehicleFeatures } from '../../data/vehicles.js';
       gap: 2rem;
     }
 
-    .vfl__list { gap: 3.5rem; }
-
-    .vfl__item + .vfl__item {
-      padding-top: 3.5rem;
-      margin-top: -3.5rem;
-    }
-  }
-
-  @media (max-width: 540px) {
     .vfl__list { gap: 2.5rem; }
 
     .vfl__item + .vfl__item {
       padding-top: 2.5rem;
       margin-top: -2.5rem;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .vfl__list { gap: 1.75rem; }
+
+    .vfl__item + .vfl__item {
+      padding-top: 1.75rem;
+      margin-top: -1.75rem;
     }
 
     .vfl__title { font-size: 1.3rem; }
