@@ -34,6 +34,11 @@ import { company } from '../../data/company.js';
 
   <div class="footer__bottom">
     <p>© {new Date().getFullYear()} (주)로한물류. All rights reserved.</p>
+    <nav class="footer__legal" aria-label="법적 고지">
+      <a href="/privacy">개인정보처리방침</a>
+      <span aria-hidden="true">|</span>
+      <a href="/email-policy">이메일무단수집거부</a>
+    </nav>
   </div>
 </footer>
 
@@ -121,9 +126,32 @@ import { company } from '../../data/company.js';
   .footer__bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding-block: 1rem;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
     font-size: 0.78rem;
     color: rgba(255, 255, 255, 0.28);
+  }
+
+  .footer__legal {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .footer__legal a {
+    color: rgba(255, 255, 255, 0.35);
+    transition: color var(--transition);
+  }
+
+  .footer__legal a:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .footer__legal span {
+    color: rgba(255, 255, 255, 0.15);
   }
 
   /* Tablet */
