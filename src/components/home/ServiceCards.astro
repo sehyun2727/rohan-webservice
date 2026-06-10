@@ -23,12 +23,19 @@ const icons: Record<string, string> = {
     <line x1="35.31" y1="8.69" x2="8.69" y2="35.31" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
     <circle cx="22" cy="22" r="5" stroke="currentColor" stroke-width="2.2"/>
   </svg>`,
+  consulting: `<svg width="40" height="40" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="4" y="8" width="36" height="26" rx="3" stroke="currentColor" stroke-width="2.2"/>
+    <path d="M12 28l6-8 5 5 5-7 6 10" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="4" y1="36" x2="40" y2="36" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    <circle cx="34" cy="14" r="3" stroke="currentColor" stroke-width="1.8"/>
+  </svg>`,
 };
 
 const topColors: Record<string, string> = {
-  coldchain: 'var(--color-accent)',
-  '3pl':     'var(--color-point)',
-  storage:   'var(--color-primary-light)',
+  coldchain:   'var(--color-accent)',
+  '3pl':       'var(--color-point)',
+  storage:     'var(--color-primary-light)',
+  consulting:  '#6366f1',
 };
 ---
 
@@ -38,8 +45,8 @@ const topColors: Record<string, string> = {
       <span class="section-label">Services</span>
       <h2 class="section-title">사업 영역</h2>
       <p class="section-desc">
-        콜드체인 전 과정을 직접 운영합니다.<br />
-        운송부터 보관·대행까지 원스톱으로 제공합니다.
+        운송·보관·대행에서 물류 컨설팅까지<br />
+        콜드체인 전 과정을 직접 운영합니다.
       </p>
     </div>
 
@@ -74,7 +81,7 @@ const topColors: Record<string, string> = {
 
   .svc-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
   }
 
@@ -165,7 +172,6 @@ const topColors: Record<string, string> = {
     .svc-grid {
       grid-template-columns: repeat(2, 1fr);
     }
-    .svc-card:last-child { grid-column: 1 / -1; max-width: 480px; margin-inline: auto; width: 100%; }
   }
 
   @media (max-width: 600px) {
