@@ -1,6 +1,7 @@
 export const services = [
   {
     id: 'coldchain',
+    image: '/assets/images/services/coldchain.jpg',
     title: '콜드체인 운송',
     titleEn: 'Cold Chain Transport',
     summary: '전국 육상 냉동·냉장 운송',
@@ -19,6 +20,7 @@ export const services = [
   },
   {
     id: '3pl',
+    image: '/assets/images/services/3pl.jpg',
     title: '3PL 물류대행',
     titleEn: '3PL Logistics',
     summary: '저온물류 종합 대행 서비스',
@@ -36,6 +38,7 @@ export const services = [
   },
   {
     id: 'storage',
+    image: '/assets/images/services/storage.jpg',
     title: '냉동·냉장 창고임대',
     titleEn: 'Cold Storage',
     summary: '안성·칠곡·진주 거점 창고 임대',
@@ -54,6 +57,7 @@ export const services = [
   },
   {
     id: 'consulting',
+    image: '/assets/images/services/consulting.jpg',
     title: '물류 컨설팅',
     titleEn: 'Logistics Consulting',
     summary: '데이터 기반 물류 전략·원가 컨설팅',

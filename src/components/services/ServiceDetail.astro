@@ -6,10 +6,11 @@ interface Props {
   summary: string;
   description: string;
   features: string[];
+  image?: string;
   reverse?: boolean;
 }
 
-const { id, titleEn, title, summary, description, features, reverse = false } = Astro.props;
+const { id, titleEn, title, summary, description, features, image, reverse = false } = Astro.props;
 
 const icons: Record<string, string> = {
   coldchain: `<svg viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -53,10 +54,21 @@ const accentColors: Record<string, string> = {
 ---
 
 <div class={`svc-detail ${reverse ? 'svc-detail--reverse' : ''}`} id={id}>
-  <div class="svc-detail__visual" data-aos={reverse ? 'fade-left' : 'fade-right'} style={`--accent: ${accentColors[id]}`}>
+  <div
+    class={`svc-detail__visual ${image ? 'has-photo' : ''}`}
+    data-aos={reverse ? 'fade-left' : 'fade-right'}
+    style={`--accent: ${accentColors[id]}`}
+  >
+    {image && (
+      <img
+        src={image}
+        alt={title}
+        class="svc-detail__photo"
+        onerror="this.closest('.svc-detail__visual').classList.replace('has-photo','no-photo')"
+      />
+    )}
     <div class="svc-detail__icon" set:html={icons[id]} />
     <span class="svc-detail__en">{titleEn}</span>
-    <span class="svc-detail__photo-notice">추후 사진 삽입 예정</span>
   </div>
 
   <div class="svc-detail__content" data-aos={reverse ? 'fade-right' : 'fade-left'} data-aos-delay="100">
@@ -104,11 +116,32 @@ const accentColors: Record<string, string> = {
     overflow: hidden;
   }
 
+  /* Default: accent gradient overlay */
   .svc-detail__visual::before {
     content: '';
     position: absolute;
     inset: 0;
     background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 20%, transparent) 0%, transparent 65%);
+    z-index: 1;
+  }
+
+  /* Photo fills panel behind the overlay */
+  .svc-detail__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+  }
+
+  /* When photo loaded: darken overlay, hide icon */
+  .svc-detail__visual.has-photo::before {
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
+  }
+
+  .svc-detail__visual.has-photo .svc-detail__icon {
+    display: none;
   }
 
   .svc-detail__icon {
@@ -116,7 +149,7 @@ const accentColors: Record<string, string> = {
     height: 52px;
     color: rgba(255, 255, 255, 0.75);
     position: relative;
-    z-index: 1;
+    z-index: 2;
     transition: color 0.3s ease;
   }
 
@@ -131,18 +164,7 @@ const accentColors: Record<string, string> = {
     text-transform: uppercase;
     color: var(--accent);
     position: relative;
-    z-index: 1;
-  }
-
-  .svc-detail__photo-notice {
-    position: relative;
-    z-index: 1;
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.3);
-    border: 1px dashed rgba(255,255,255,0.2);
-    border-radius: 4px;
-    padding: 0.3rem 0.7rem;
-    letter-spacing: 0.04em;
+    z-index: 2;
   }
 
   /* Content panel */
