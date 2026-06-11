@@ -3,11 +3,12 @@ import { company } from '../../data/company.js';
 ---
 
 <section class="greeting" aria-label="대표이사 인사말">
-  <div class="container greeting__inner">
+  <div class="container">
+    <div class="greeting__inner" data-aos="fade-up">
 
-    <div class="greeting__text" data-aos="fade-right">
       <span class="section-label">CEO Message</span>
       <h2 class="section-title">대표이사 인사말</h2>
+
       <div class="greeting__body">
         <p>
           안녕하십니까, (주)로한물류 대표이사 {company.ceo}입니다.<br />
@@ -32,19 +33,18 @@ import { company } from '../../data/company.js';
         </p>
         <p class="greeting__thanks">감사합니다.</p>
       </div>
+
       <p class="greeting__sign">
-        (주)로한물류 대표이사 <strong>{company.ceo}</strong>
+        <span>(주)로한물류 대표이사 <strong>{company.ceo}</strong></span>
+        <img
+          src="/assets/images/signature.png"
+          alt="대표이사 서명"
+          class="greeting__signature"
+          onerror="this.style.display='none'"
+        />
       </p>
-    </div>
 
-    <div class="greeting__photo" aria-hidden="true" data-aos="fade-left" data-aos-delay="100">
-      <!-- 대표이사 사진을 public/assets/ceo.jpg 에 넣어주세요 -->
-      <div class="greeting__photo-placeholder">
-        <span class="greeting__photo-initial">{company.ceo.charAt(0)}</span>
-        <p>대표이사 사진</p>
-      </div>
     </div>
-
   </div>
 </section>
 
@@ -55,10 +55,7 @@ import { company } from '../../data/company.js';
   }
 
   .greeting__inner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem;
-    align-items: center;
+    max-width: 820px;
   }
 
   .greeting__body {
@@ -87,6 +84,10 @@ import { company } from '../../data/company.js';
   }
 
   .greeting__sign {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
     font-size: 0.95rem;
     color: var(--color-text-muted);
     border-top: 1px solid var(--color-border);
@@ -98,53 +99,11 @@ import { company } from '../../data/company.js';
     font-weight: 700;
   }
 
-  .greeting__photo {
-    width: 280px;
+  .greeting__signature {
+    height: 56px;
+    width: auto;
+    opacity: 0.8;
+    display: block;
     flex-shrink: 0;
-  }
-
-  .greeting__photo-placeholder {
-    width: 280px;
-    height: 260px;
-    background: var(--color-bg-subtle);
-    border: 2px dashed var(--color-border);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    color: var(--color-text-muted);
-    font-size: 0.82rem;
-  }
-
-  .greeting__photo-initial {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    color: #fff;
-    font-size: 1.8rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @media (max-width: 768px) {
-    .greeting__inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
-    .greeting__photo {
-      width: 100%;
-      order: -1;
-    }
-
-    .greeting__photo-placeholder {
-      width: 100%;
-      height: 220px;
-    }
   }
 </style>
